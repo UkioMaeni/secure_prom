@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize';
 
 
-const sequelize:Sequelize = new Sequelize('postgres://postgres:1234@localhost:5432/ohrana');
+const sequelize:Sequelize = new Sequelize('postgres://secure:secure@localhost:5432/secure');
      
     
 export default sequelize;
