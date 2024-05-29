@@ -7,13 +7,11 @@ import path = require('path');
 import { imapFlowConnect } from './services/mailer';
 import excel from './services/excel';
 import { initialize } from './services/initialize';
-
+import dataRouter from './routes/dataRouter';
+import authRouter from './routes/authRouter';
 app.use(express.json())
-app.post("/",(req,res)=>{
-    console.log(req);
-    console.log(req.body);
-    res.send("OK")
-})
+app.use("/api",dataRouter)
+app.use("/api",authRouter)
 //imapFlowConnect();
 //excel.parseInit()
 const options = {
