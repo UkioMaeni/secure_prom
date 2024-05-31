@@ -16,7 +16,7 @@ Auth.init(
             autoIncrement: true,
             primaryKey: true,
         },
-        passHash: {
+        pass_hash: {
             type: DataTypes.STRING,
             allowNull: false,
         },

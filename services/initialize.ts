@@ -1,7 +1,7 @@
 import xlsx = require('xlsx');
 import path = require('path');
 import FullInfo,{FullInfoRow} from "../models/full_info"
-import Auth from '../models/auth';
+import Auth, { AuthRow } from '../models/auth';
 const alpabet:Array<string>=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','AF','AG','AH','AI']
 
 
@@ -11,6 +11,9 @@ const alpabet:Array<string>=['A','B','C','D','E','F','G','H','I','J','K','L','M'
 
 export async function initialize(){
     await Auth.sync();
+    await Auth.create({
+        [AuthRow.passHash]:"65e84be33532fb784c48129675f9eff3a682b27168c0ea744b2cf58ee02337c5"
+    });
     await FullInfo.sync();
     const workBook= xlsx.readFile(path.join(__dirname, '../init_db_data.xlsb'))
     const sheet = workBook.Sheets['УРПО'];
