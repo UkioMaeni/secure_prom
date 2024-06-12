@@ -4,6 +4,7 @@ import authController from "../controllers/authController";
 
 authRouter.post("/auth",authController.auth);
 
+
 // userRouter.get("/profile/:userId",UserController.profileUser);
 // userRouter.get("/find",UserController.find);
 // userRouter.post("/addfriends",UserController.addFriends);

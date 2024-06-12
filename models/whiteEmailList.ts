@@ -1,32 +1,32 @@
 import sequelize from "../db/postgres/postgresDb"
 import { DataTypes, Model } from 'sequelize';
 
-export enum AuthRow{
+export enum WhiteEmailListRow{
     id="id",
-    pass_hash="pass_hash",
+    email="email",
 }
-class Auth extends Model{
+class WhiteEmailList extends Model{
     declare id:number;
-    declare passHash:string;
+    declare email:string;
 }
-Auth.init(
+WhiteEmailList.init(
     {   
         id: {
             type: DataTypes.INTEGER.UNSIGNED,
             autoIncrement: true,
             primaryKey: true,
         },
-        pass_hash: {
+        email: {
             type: DataTypes.STRING,
             allowNull: false,
         },
     },
     {
         
-        tableName:"auth",
+        tableName:"white_email_list",
         sequelize,
         createdAt:false,
         updatedAt:false
     }
     )
-  export default  Auth;
+  export default  WhiteEmailList;

@@ -16,7 +16,7 @@ class AuthController {
           const passHash= crypto.createHash('sha256').update(pass).digest('hex');
           const fullInfo=await Auth.findOne({
             where:{
-              [AuthRow.passHash]:passHash
+              [AuthRow.pass_hash]:passHash
             }
           })
           if(!fullInfo){

@@ -1,15 +1,17 @@
 import sequelize from "../db/postgres/postgresDb"
 import { DataTypes, Model } from 'sequelize';
 
-export enum AuthRow{
+export enum AdminAuthRow{
     id="id",
+    login="login",
     pass_hash="pass_hash",
 }
-class Auth extends Model{
+class AdminAuth extends Model{
     declare id:number;
+    declare login:string;
     declare passHash:string;
 }
-Auth.init(
+AdminAuth.init(
     {   
         id: {
             type: DataTypes.INTEGER.UNSIGNED,
@@ -20,13 +22,17 @@ Auth.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
+        login: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
     },
     {
         
-        tableName:"auth",
+        tableName:"admin_auth",
         sequelize,
         createdAt:false,
         updatedAt:false
     }
     )
-  export default  Auth;
+  export default  AdminAuth;
