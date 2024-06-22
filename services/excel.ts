@@ -79,7 +79,9 @@ class ExcelTOOL{
         })
         
     const workBook= xlsx.readFile(path.join(__dirname+"/../temp/"+pathToFile))
-    const sheet = workBook.Sheets['УРПО'];
+    
+    
+    const sheet = workBook.Sheets['Лист1'];
     const dataCount=sheet["!ref"].split(":");
     const regex = /\d+/;
     const match = dataCount[1].match(regex);
@@ -94,52 +96,82 @@ class ExcelTOOL{
         }
         for(let j=3;j<=endRow;j++){
         
-            const fullName=sheet["B"+j]?.["w"]??null;
-            const propuskNumber=sheet["C"+j]?.["w"]??null;
-            const organization=sheet["D"+j]?.["w"]??null;
-            const mainProfessional=sheet["E"+j]?.["w"]??null;
-            const secondProfessional=sheet["F"+j]?.["w"]??null;
-            const firdProfessional=sheet["G"+j]?.["w"]??null;
-            const otherProfessional=sheet["H"+j]?.["w"]??null;
-            const medical=sheet["I"+j]?.["w"]??null;
-            const promSecure=sheet["J"+j]?.["w"]??null;
-            const infoSecure=sheet["K"+j]?.["w"]??null;
-            const workSecure=sheet["L"+j]?.["w"]??null;
-            const medicalHelp=sheet["M"+j]?.["w"]??null;
-            const fireSecure=sheet["N"+j]?.["w"]??null;
-            const groupEB=sheet["O"+j]?.["w"]??null;
-            const winterDriver=sheet["P"+j]?.["w"]??null;
-            const workInHeight=sheet["Q"+j]?.["w"]??null;
+            const fullName=sheet["A"+j]?.["w"]??null;
+            const propuskNumber=sheet["B"+j]?.["w"]??null;
+            const organization=sheet["C"+j]?.["w"]??null;
+            const professionals=sheet["D"+j]?.["w"]??null;
+            //
+
+            const medical=sheet["E"+j]?.["w"]??null;
+            const promSecure=sheet["F"+j]?.["w"]??null;
+            const promSecureOblast=sheet["G"+j]?.["w"]??null; //new
+            const infoSecure=sheet["H"+j]?.["w"]??null;
+            const workSecure=sheet["I"+j]?.["w"]??null;
+            const medicalHelp=sheet["J"+j]?.["w"]??null;
+            const fireSecure=sheet["K"+j]?.["w"]??null;
+            const electroSecureGroup=sheet["L"+j]?.["w"]??null;//new
+            const electroSecure=sheet["M"+j]?.["w"]??null;//new
+            const driverPermit=sheet["N"+j]?.["w"]??null;//new
+            const winterDriver=sheet["O"+j]?.["w"]??null;
+            const workInHeight=sheet["P"+j]?.["w"]??null;
+            const workInHeightGroup=sheet["Q"+j]?.["w"]??null;
             const GPVPGroup=sheet["R"+j]?.["w"]??null;
             const GNVPGroup=sheet["S"+j]?.["w"]??null;
             const VOZTest=sheet["T"+j]?.["w"]??null;
             const VOZProfessional=sheet["U"+j]?.["w"]??null;
-            const lastInputDate=sheet["AF"+j]?.["w"]??null;
-            const lastInputKPP=sheet["AG"+j]?.["w"]??null;
-            const passStatus=sheet["AH"+j]?.["w"]??null;
-            const passDate=sheet["AI"+j]?.["w"]??null;
+
+            //new->
+            const burAndVSR=sheet["V"+j]?.["w"]??null;
+            const KSAndCMP=sheet["W"+j]?.["w"]??null;
+            const transport=sheet["X"+j]?.["w"]??null;
+            const energy=sheet["Y"+j]?.["w"]??null;
+            const GT=sheet["Z"+j]?.["w"]??null;
+            const PPDU=sheet["AA"+j]?.["w"]??null;
+            const CA=sheet["AB"+j]?.["w"]??null;
+            const KP_2=sheet["AC"+j]?.["w"]??null;
+            const PB_11=sheet["AD"+j]?.["w"]??null;
+            const PB_12=sheet["AE"+j]?.["w"]??null;
+            //end
+
+            const lastInputDate=sheet["AK"+j]?.["w"]??null;
+            const lastInputKPP=sheet["AL"+j]?.["w"]??null;
+            const medicalType=sheet["AJ"+j]?.["w"]??null;
+            const passDate=sheet["AM"+j]?.["w"]??null;
+            const passStatus=sheet["AN"+j]?.["w"]??null;
 
             await FullInfo.create({
                 [FullInfoRow.fullName]:fullName,
                 [FullInfoRow.propuskNumber]:propuskNumber,
                 [FullInfoRow.organization]:organization,
-                [FullInfoRow.mainProfessional]:mainProfessional,
-                [FullInfoRow.secondProfessional]:secondProfessional,
-                [FullInfoRow.firdProfessional]:firdProfessional,
-                [FullInfoRow.otherProfessional]:otherProfessional,
+                [FullInfoRow.professionals]:professionals,
                 [FullInfoRow.medical]:medical,
                 [FullInfoRow.promSecure]:promSecure,
                 [FullInfoRow.infoSecure]:infoSecure,
                 [FullInfoRow.workSecure]:workSecure,
                 [FullInfoRow.medicalHelp]:medicalHelp,
                 [FullInfoRow.fireSecure]:fireSecure,
-                [FullInfoRow.groupEB]:groupEB,
                 [FullInfoRow.winterDriver]:winterDriver,
                 [FullInfoRow.workInHeight]:workInHeight,
+                [FullInfoRow.workInHeightGroup]:workInHeightGroup,
                 [FullInfoRow.GPVPGroup]:GPVPGroup,
                 [FullInfoRow.GNVPGroup]:GNVPGroup,
                 [FullInfoRow.VOZTest]:VOZTest,
                 [FullInfoRow.VOZProfessional]:VOZProfessional,
+                [FullInfoRow.promSecureOblast]:promSecureOblast,
+                [FullInfoRow.electroSecureGroup]:electroSecureGroup,
+                [FullInfoRow.electroSecure]:electroSecure,
+                [FullInfoRow.driverPermit]:driverPermit,
+                [FullInfoRow.burAndVSR]:burAndVSR,
+                [FullInfoRow.KSAndCMP]:KSAndCMP,
+                [FullInfoRow.transport]:transport,
+                [FullInfoRow.energy]:energy,
+                [FullInfoRow.GT]:GT,
+                [FullInfoRow.PPDU]:PPDU,
+                [FullInfoRow.CA]:CA,
+                [FullInfoRow.KP_2]:KP_2,
+                [FullInfoRow.PB_11]:PB_11,
+                [FullInfoRow.PB_12]:PB_12,
+                [FullInfoRow.medicalType]:medicalType,
                 [FullInfoRow.lastInputDate]:lastInputDate,
                 [FullInfoRow.lastInputKPP]:lastInputKPP,
                 [FullInfoRow.passStatus]:passStatus,
@@ -147,7 +179,8 @@ class ExcelTOOL{
             })
         } 
        } catch (error) {
-
+        console.log(error);
+        
        } finally{
             await Settings.update({
                 [SettingsRow.value]:0,

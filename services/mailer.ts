@@ -16,33 +16,37 @@ type Command={
 const Imap = require('imap'),
 inspect = require('util').inspect;
 
-    import { ImapFlow, MailboxObject,FetchMessageObject } from 'imapflow';
+    import { ImapFlow, MailboxObject,FetchMessageObject, MailboxLockObject } from 'imapflow';
 import { MailParserOptions } from 'mailparser';
 import Settings, { SettingsRow } from '../models/settings';
 import WhiteEmailList, { WhiteEmailListRow } from '../models/whiteEmailList';
 import excel from './excel';
-    const client = new ImapFlow({
-        host: 'imap.yandex.ru',
-        port: 993,
-        secure: true,
-        auth: {
-            user: 'priz.a@yandex.ru',
-            pass: '89045462751'
-        },
-        disableAutoIdle:true,
-        logger:false,
-        logRaw:false,
-        emitLogs:false,
-        greetingTimeout:30000
-        
-    });
+    
 export const imapFlowConnect=async()=>{
    
-    await client.connect();
+    
     
     // Select and lock a mailbox. Throws if mailbox does not exist
-    let lock = await client.getMailboxLock('INBOX',);
+    let lock:MailboxLockObject;
+    let client:ImapFlow;
     try {
+        const client = new ImapFlow({
+            host: 'imap.yandex.ru',
+            port: 993,
+            secure: true,
+            auth: {
+                user: 'priz.a@yandex.ru',
+                pass: '89045462751'
+            },
+            disableAutoIdle:true,
+            logger:false,
+            logRaw:false,
+            emitLogs:false,
+            greetingTimeout:30000
+            
+        });
+        await client.connect();
+         lock = await client.getMailboxLock('INBOX',);
         console.log(client.mailbox );
         const obj:MailboxObject=client.mailbox as MailboxObject;
         console.log(obj.exists);
@@ -151,10 +155,15 @@ export const imapFlowConnect=async()=>{
     } finally {
         // Make sure lock is released, otherwise next `getMailboxLock()` never returns
         console.log("CLIENT unlocked");
+        if(lock){
+            lock.release();
+        }
         
-        lock.release();
         console.log("CLIENT logout");
-        await client.logout();
+        if(client){
+            await client.logout();
+        }
+        
     }
 
     

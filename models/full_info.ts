@@ -6,23 +6,35 @@ export enum FullInfoRow{
     fullName="fullName",
     propuskNumber="propuskNumber",
     organization="organization",
-    mainProfessional="mainProfessional",
-    secondProfessional="secondProfessional",
-    firdProfessional="firdProfessional",
-    otherProfessional="otherProfessional",
+    professionals="professionals",
     medical="medical",
     promSecure="promSecure",
+    promSecureOblast="promSecureOblast",
     infoSecure="infoSecure",
     workSecure="workSecure",
     medicalHelp="medicalHelp",
     fireSecure="fireSecure",
-    groupEB="groupEB",
+    electroSecureGroup="electroSecureGroup",
+    electroSecure="electroSecure",
+    driverPermit="driverPermit",
     winterDriver="winterDriver",
     workInHeight="workInHeight",
+    workInHeightGroup="workInHeightGroup",
     GPVPGroup="GPVPGroup",
     GNVPGroup="GNVPGroup",
     VOZTest="VOZTest",
     VOZProfessional="VOZProfessional",
+    burAndVSR="burAndVSR",
+    KSAndCMP="KSAndCMP",
+    transport="transport",
+    energy="energy",
+    GT="GT",
+    PPDU="PPDU",
+    CA="CA",
+    KP_2="KP_2",
+    PB_11="PB_11",
+    PB_12="PB_12",
+    medicalType="medicalType",
     lastInputDate="lastInputDate",
     lastInputKPP="lastInputKPP",
     passStatus="passStatus",
@@ -33,12 +45,11 @@ class FullInfo extends Model{
     declare fullName:string;
     declare propuskNumber:string;
     declare organization:string;
-    declare mainProfessional:string;
-    declare secondProfessional:string;
-    declare firdProfessional:string;
-    declare otherProfessional:string;
+    declare professionals:string;
+
     declare medical:string;
     declare promSecure:string;
+    declare promSecureOblast:string;
     declare infoSecure:string;
     declare workSecure:string;
     declare medicalHelp:string;
@@ -46,6 +57,7 @@ class FullInfo extends Model{
     declare groupEB:string;
     declare winterDriver:string;
     declare workInHeight:string;
+    declare workInHeightGroup:string;
     declare GPVPGroup:string;
     declare GNVPGroup:string;
     declare VOZTest:string;
@@ -74,19 +86,7 @@ FullInfo.init(
             type: DataTypes.STRING,
             allowNull: true,
         },
-        mainProfessional: {
-            type: DataTypes.STRING,
-            allowNull: true,
-        },
-        secondProfessional: {
-            type: DataTypes.STRING,
-            allowNull: true,
-        },
-        firdProfessional: {
-            type: DataTypes.STRING,
-            allowNull: true,
-        },
-        otherProfessional: {
+        professionals: {
             type: DataTypes.STRING,
             allowNull: true,
         },
@@ -95,6 +95,10 @@ FullInfo.init(
             allowNull: true,
         },
         promSecure: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        promSecureOblast: {
             type: DataTypes.STRING,
             allowNull: true,
         },
@@ -114,7 +118,15 @@ FullInfo.init(
             type: DataTypes.STRING,
             allowNull: true,
         },
-        groupEB: {
+        electroSecureGroup: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        electroSecure: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        driverPermit: {
             type: DataTypes.STRING,
             allowNull: true,
         },
@@ -123,6 +135,10 @@ FullInfo.init(
             allowNull: true,
         },
         workInHeight: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        workInHeightGroup: {
             type: DataTypes.STRING,
             allowNull: true,
         },
@@ -139,6 +155,50 @@ FullInfo.init(
             allowNull: true,
         },
         VOZProfessional: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        burAndVSR: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        KSAndCMP: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        transport: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        energy: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        GT: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        PPDU: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        CA: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        KP_2: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        PB_11: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        PB_12: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        medicalType:{
             type: DataTypes.STRING,
             allowNull: true,
         },

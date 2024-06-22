@@ -29,7 +29,7 @@ http.createServer(app).listen(PORT, async() => {
    await initialize();
    setInterval(()=>{
     imapFlowConnect();
-    },1000*60*5);
+    },1000*60);
    //imapFlowConnect()
    console.log(mailWorker);
    
