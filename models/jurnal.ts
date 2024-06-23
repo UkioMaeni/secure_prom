@@ -11,6 +11,7 @@ export enum JurnalRow{
     numberPassPassanger="numberPassPassanger",
     inputObject="inputObject",
     outputObject="outputObject",
+    errors="errors"
 }
 class Jurnal extends Model{
     declare id:number;
@@ -22,6 +23,7 @@ class Jurnal extends Model{
     declare numberPassPassanger:string;
     declare inputObject:string;
     declare outputObject:string;
+    declare errors:string;
 }
 Jurnal.init(
     {   
@@ -31,15 +33,15 @@ Jurnal.init(
             primaryKey: true,
         },
         kpp: {
-            type: DataTypes.NUMBER,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         date: {
-            type: DataTypes.DATE,
+            type: DataTypes.STRING,
             allowNull: true,
         },
         time: {
-            type: DataTypes.DATE,
+            type: DataTypes.STRING,
             allowNull: true,
         },
         numberPassTS: {
@@ -59,6 +61,10 @@ Jurnal.init(
             allowNull: true,
         },
         outputObject: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        errors: {
             type: DataTypes.STRING,
             allowNull: true,
         },

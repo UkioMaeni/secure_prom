@@ -32,7 +32,7 @@ http.createServer(app).listen(PORT, async() => {
     },1000*60);
    //imapFlowConnect()
    console.log(mailWorker);
-   
+    excel.createJurnal();
     console.log('HTTPS server running on https://localhost:3000');
 });
 

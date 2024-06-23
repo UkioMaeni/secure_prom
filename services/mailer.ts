@@ -3,7 +3,7 @@ import fs = require('fs');
 import mailparser = require('mailparser');
 const MailParser = mailparser.MailParser;
 import excelTool from "./excel"
-
+var nodemailer = require('nodemailer')
 enum ECommand{
     update,noCommand
 }
@@ -168,3 +168,30 @@ export const imapFlowConnect=async()=>{
 
     
 }    
+
+
+export const sendMail=async(path:string,name:string)=>{
+    const transporter = nodemailer.createTransport({
+        service:"yandex",
+        auth: {
+          user: 'priz.a@yandex.ru',
+          pass: '89045462751',
+        }
+      });
+        const message = {
+                from: 'priz.a@yandex.ru',
+                to: "priz.a47@gmail.com",
+                subject: 'OTP Code',
+                text: "dsds",
+                attachments:[
+                    {   
+                        filename: name,
+                        path: path 
+                    },
+                ]
+            };
+        await transporter.sendMail(message,(err: any)=>{
+                console.log(err);
+                
+            });
+}
