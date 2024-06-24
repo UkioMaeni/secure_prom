@@ -5,6 +5,7 @@ import Auth, { AuthRow } from '../models/auth';
 import WhiteEmailList,{WhiteEmailListRow} from '../models/whiteEmailList';
 import AdminAuth,{AdminAuthRow} from '../models/adminAuth';
 import Settings, { SettingsRow } from '../models/settings';
+import PbList from '../models/PbList';
 
 
  
@@ -42,6 +43,7 @@ export async function initialize(){
         },
        
     );
+    await PbList.sync();
     await WhiteEmailList.sync();
     await WhiteEmailList.findOrCreate({
         where:{

@@ -6,6 +6,8 @@ import AdminAuth,{AdminAuthRow} from '../models/adminAuth';
 import fs = require('fs');
 import excelTool from "../services/excel"
 import Settings, { SettingsRow } from '../models/settings';
+import WhiteEmailList, { WhiteEmailListRow } from '../models/whiteEmailList';
+import PbList, { PbListRow } from '../models/PbList';
 type ControllerFunction = (req: Request, res: Response) => void;
 
 class AuthController {
@@ -54,12 +56,177 @@ class AuthController {
           return res.status(400).send("База обновляется, подождите")
         }
           fs.writeFileSync(__dirname+"/../temp/"+file.originalname,file.buffer);
-          excelTool.syncToDB(file.originalname);
+          await excelTool.syncToDB(file.originalname);
           res.send(200)
         } catch (error) {
           res.status(500).send("no worker")
         }
       }
-      
+      dblist:ControllerFunction=async(req, res) => {
+        try {
+          
+          const count=await FullInfo.count()
+          console.log("count"+count);
+          
+          res.status(200).send(count.toString())
+        } catch (error) {
+          console.log(error);
+          
+          res.status(500).send("no worker")
+        }
+      }
+      adminList:ControllerFunction=async(req, res) => {
+        try {
+          
+          const adm=await AdminAuth.findAll()
+          
+          
+          res.status(200).send(adm.map(el=>({login:el.login,id:el.id})))
+        } catch (error) {
+          console.log(error);
+          
+          res.status(500).send("no worker")
+        }
+      }
+      adminListDelete:ControllerFunction=async(req, res) => {
+        try {
+          const id=req.body["id"];
+          if(!id){
+            res.status(400).send("error")
+          }
+          const count=await AdminAuth.count();
+          if(count<=1){
+           return res.status(400).send("Должна остаться хотя бы 1 запись!")
+          }
+          await AdminAuth.destroy({
+            where:{
+              [AdminAuthRow.id]:id
+            },
+
+          })
+          console.log("count"+count);
+          
+          res.status(200).send("OK")
+        } catch (error) {
+          console.log(error);
+          
+          res.status(500).send("no worker")
+        }
+      }
+      adminListAdd:ControllerFunction=async(req, res) => {
+        try {
+          
+          const {login,pass} = req.body;
+          console.log(req.body);
+          
+          if(!login||!pass){
+            return res.status(400).send("Нет логина или пароля")
+          }
+          const passHash= crypto.createHash('sha256').update(pass).digest('hex');
+          await AdminAuth.create({
+            [AdminAuthRow.login]:login,
+            [AdminAuthRow.pass_hash]:passHash
+
+          });
+          
+          
+          res.status(200).send("OK")
+        } catch (error) {
+          console.log(error);
+          
+          res.status(500).send("no worker")
+        }
+      }
+      activeMail:ControllerFunction=async(req, res) => {
+        try {
+          
+          const mail =await WhiteEmailList.findOne()
+          
+          
+          res.status(200).send(mail.email)
+        } catch (error) {
+          console.log(error);
+          
+          res.status(500).send("no worker")
+        }
+      }
+      activeMailUpdate:ControllerFunction=async(req, res) => {
+        try {
+          
+          const {mail} = req.body;
+          if(!mail){
+            return res.status(400).send("Не указана почта")
+          }
+          await WhiteEmailList.truncate()
+          await WhiteEmailList.create({
+            [WhiteEmailListRow.email]:mail
+          })
+
+          
+          
+          res.status(200).send("OK")
+        } catch (error) {
+          console.log(error);
+          
+          res.status(500).send("no worker")
+        }
+      }
+      pbList:ControllerFunction=async(req, res) => {
+        try {
+          
+          const pb =await PbList.findAll()
+          
+          
+          res.status(200).send(pb.map(el=>({login:el.login,id:el.id})))
+        } catch (error) {
+          console.log(error);
+          
+          res.status(500).send("no worker")
+        }
+      }
+      pbListDelete:ControllerFunction=async(req, res) => {
+        try {
+          const id=req.body["id"];
+          if(!id){
+            res.status(400).send("error")
+          }
+          await PbList.destroy({
+            where:{
+              [AdminAuthRow.id]:id
+            },
+
+          })
+          
+          res.status(200).send("OK")
+        } catch (error) {
+          console.log(error);
+          
+          res.status(500).send("no worker")
+        }
+      }
+      pbListAdd:ControllerFunction=async(req, res) => {
+        try {
+          
+          const {login,pass} = req.body;
+          console.log(req.body);
+          
+          if(!login||!pass){
+            return res.status(400).send("Нет логина или пароля")
+          }
+          const passHash= crypto.createHash('sha256').update(pass).digest('hex');
+          await PbList.create({
+            [PbListRow.login]:login,
+            [PbListRow.passHash]:passHash
+
+          });
+          
+          
+          res.status(200).send("OK")
+        } catch (error) {
+          console.log(error);
+          
+          res.status(500).send("no worker")
+        }
+      }
   }
 export default new AuthController()
