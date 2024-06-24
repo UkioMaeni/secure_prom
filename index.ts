@@ -24,7 +24,7 @@ const options = {
     key: fs.readFileSync(path.join(__dirname, 'privateKey.key')),
     cert: fs.readFileSync(path.join(__dirname, 'certificate.crt'))
 };
-const PORT = 3000;
+const PORT = 3005;
 http.createServer(app).listen(PORT, async() => {
    await initialize();
    setInterval(()=>{
