@@ -94,6 +94,8 @@ class ExcelTOOL{
         const number = parseInt(match[0]);
         console.log(number); 
         endRow=number;
+        console.log(endRow);
+        
         } else {
         console.log('No number found');
         }
@@ -104,23 +106,120 @@ class ExcelTOOL{
             const organization=sheet["C"+j]?.["w"]??null;
             const professionals=sheet["D"+j]?.["w"]??null;
             //
+            
+            let medical=sheet["E"+j]?.["w"]??null;
+            if(medical!=null && sheet["AJ"+j]?.["w"]!=null){
 
-            const medical=sheet["E"+j]?.["w"]??null;
-            const promSecure=sheet["F"+j]?.["w"]??null;
+                let parts = medical.split("/");
+                const lastNum = parseInt(parts[parts.length - 1]);
+                const addedYear=parseInt(sheet["AJ"+j]?.["w"])
+                const sum =lastNum+addedYear;
+                const updatedStr = parts.slice(0, parts.length - 1).join("/") + "/" + sum;
+                medical=updatedStr;
+                //console.log(updatedStr);     
+            }
+            
+           
+            
+            let promSecure=sheet["F"+j]?.["w"]??null;
+            if(promSecure && sheet["F2"]?.["w"]!=null){
+                const date = new Date(parseInt("20"+promSecure.split("/")[2]), parseInt(promSecure.split("/")[0]), parseInt(promSecure.split("/")[1]));
+                const addedMonth=parseInt(sheet["F2"]?.["w"])
+                date.setMonth(date.getMonth()+addedMonth)
+                const year=date.getFullYear().toString().slice(2);
+                const updatedStr = (date.getMonth()==0?"12":date.getMonth())+"/"+date.getDate()+"/"+year
+                promSecure=updatedStr;
+                console.log(promSecure);
+                
+            }
+
             const promSecureOblast=sheet["G"+j]?.["w"]??null; //new
-            const infoSecure=sheet["H"+j]?.["w"]??null;
-            const workSecure=sheet["I"+j]?.["w"]??null;
-            const medicalHelp=sheet["J"+j]?.["w"]??null;
-            const fireSecure=sheet["K"+j]?.["w"]??null;
-            const electroSecureGroup=sheet["L"+j]?.["w"]??null;//new
-            const electroSecure=sheet["M"+j]?.["w"]??null;//new
+            let infoSecure=sheet["H"+j]?.["w"]??null;
+            if(infoSecure && sheet["H2"]?.["w"]!=null){
+                const date = new Date(parseInt("20"+infoSecure.split("/")[2]), parseInt(infoSecure.split("/")[0]), parseInt(infoSecure.split("/")[1]));
+                const addedMonth=parseInt(sheet["H2"]?.["w"])
+                date.setMonth(date.getMonth()+addedMonth)
+                const year=date.getFullYear().toString().slice(2);
+                const updatedStr = (date.getMonth()==0?"12":date.getMonth())+"/"+date.getDate()+"/"+year
+                infoSecure=updatedStr;
+            }
+            let workSecure=sheet["I"+j]?.["w"]??null;//---
+            if(workSecure && sheet["I2"]?.["w"]!=null){
+                const date = new Date(parseInt("20"+workSecure.split("/")[2]), parseInt(workSecure.split("/")[0]), parseInt(workSecure.split("/")[1]));
+                const addedMonth=parseInt(sheet["I2"]?.["w"])
+                date.setMonth(date.getMonth()+addedMonth)
+                const year=date.getFullYear().toString().slice(2);
+                const updatedStr = (date.getMonth()==0?"12":date.getMonth())+"/"+date.getDate()+"/"+year
+                workSecure=updatedStr;
+            }
+            let medicalHelp=sheet["J"+j]?.["w"]??null;
+            if(medicalHelp && sheet["J2"]?.["w"]!=null){
+                const date = new Date(parseInt("20"+medicalHelp.split("/")[2]), parseInt(medicalHelp.split("/")[0]), parseInt(medicalHelp.split("/")[1]));
+                const addedMonth=parseInt(sheet["J2"]?.["w"])
+                date.setMonth(date.getMonth()+addedMonth)
+                const year=date.getFullYear().toString().slice(2);
+                const updatedStr = (date.getMonth()==0?"12":date.getMonth())+"/"+date.getDate()+"/"+year
+                medicalHelp=updatedStr;
+            }
+            let fireSecure=sheet["K"+j]?.["w"]??null;
+            if(fireSecure && sheet["K2"]?.["w"]!=null){
+                const date = new Date(parseInt("20"+fireSecure.split("/")[2]), parseInt(fireSecure.split("/")[0]), parseInt(fireSecure.split("/")[1]));
+                const addedMonth=parseInt(sheet["K2"]?.["w"])
+                date.setMonth(date.getMonth()+addedMonth)
+                const year=date.getFullYear().toString().slice(2);
+                const updatedStr = (date.getMonth()==0?"12":date.getMonth())+"/"+date.getDate()+"/"+year
+                fireSecure=updatedStr;
+            }
+            
+            let electroSecure=sheet["L"+j]?.["w"]??null;//new
+            if(electroSecure && sheet["L2"]?.["w"]!=null){
+                const date = new Date(parseInt("20"+electroSecure.split("/")[2]), parseInt(electroSecure.split("/")[0]), parseInt(electroSecure.split("/")[1]));
+                const addedMonth=parseInt(sheet["L2"]?.["w"])
+                date.setMonth(date.getMonth()+addedMonth)
+                const year=date.getFullYear().toString().slice(2);
+                const updatedStr = (date.getMonth()==0?"12":date.getMonth())+"/"+date.getDate()+"/"+year
+                electroSecure=updatedStr;
+            }
+            const electroSecureGroup=sheet["M"+j]?.["w"]??null;//new
             const driverPermit=sheet["N"+j]?.["w"]??null;//new
             const winterDriver=sheet["O"+j]?.["w"]??null;
-            const workInHeight=sheet["P"+j]?.["w"]??null;
+            let workInHeight=sheet["P"+j]?.["w"]??null;
+            if(workInHeight && sheet["P2"]?.["w"]!=null){
+                const date = new Date(parseInt("20"+workInHeight.split("/")[2]), parseInt(workInHeight.split("/")[0]), parseInt(workInHeight.split("/")[1]));
+                const addedMonth=parseInt(sheet["P2"]?.["w"])
+                date.setMonth(date.getMonth()+addedMonth)
+                const year=date.getFullYear().toString().slice(2);
+                const updatedStr = (date.getMonth()==0?"12":date.getMonth())+"/"+date.getDate()+"/"+year
+                workInHeight=updatedStr;
+            }
             const workInHeightGroup=sheet["Q"+j]?.["w"]??null;
-            const GPVPGroup=sheet["R"+j]?.["w"]??null;
-            const GNVPGroup=sheet["S"+j]?.["w"]??null;
-            const VOZTest=sheet["T"+j]?.["w"]??null;
+            let GPVPGroup=sheet["R"+j]?.["w"]??null;
+            if(GPVPGroup && sheet["R2"]?.["w"]!=null){
+                const date = new Date(parseInt("20"+GPVPGroup.split("/")[2]), parseInt(GPVPGroup.split("/")[0]), parseInt(GPVPGroup.split("/")[1]));
+                const addedMonth=parseInt(sheet["R2"]?.["w"])
+                date.setMonth(date.getMonth()+addedMonth)
+                const year=date.getFullYear().toString().slice(2);
+                const updatedStr = (date.getMonth()==0?"12":date.getMonth())+"/"+date.getDate()+"/"+year
+                GPVPGroup=updatedStr;
+            }
+            let GNVPGroup=sheet["S"+j]?.["w"]??null;
+            if(GNVPGroup && sheet["S2"]?.["w"]!=null){
+                const date = new Date(parseInt("20"+GNVPGroup.split("/")[2]), parseInt(GNVPGroup.split("/")[0]), parseInt(GNVPGroup.split("/")[1]));
+                const addedMonth=parseInt(sheet["S2"]?.["w"])
+                date.setMonth(date.getMonth()+addedMonth)
+                const year=date.getFullYear().toString().slice(2);
+                const updatedStr = (date.getMonth()==0?"12":date.getMonth())+"/"+date.getDate()+"/"+year
+                GNVPGroup=updatedStr;
+            }
+            let VOZTest=sheet["T"+j]?.["w"]??null;
+            if(VOZTest && sheet["T2"]?.["w"]!=null){
+                const date = new Date(parseInt("20"+VOZTest.split("/")[2]), parseInt(VOZTest.split("/")[0]), parseInt(VOZTest.split("/")[1]));
+                const addedMonth=parseInt(sheet["T2"]?.["w"])
+                date.setMonth(date.getMonth()+addedMonth)
+                const year=date.getFullYear().toString().slice(2);
+                const updatedStr = (date.getMonth()==0?"12":date.getMonth())+"/"+date.getDate()+"/"+year
+                VOZTest=updatedStr;
+            }
             const VOZProfessional=sheet["U"+j]?.["w"]??null;
 
             //new->

@@ -8,15 +8,16 @@ class AuthController {
 
      auth:ControllerFunction=async(req, res) => {
         try {
-          const {pass}= req.body;
-          if(!pass){
+          const {pass,login}= req.body;
+          if(!pass||!login){
             return res.status(400).send({"code":1,message:"Пустые данные"});
           }
 
           const passHash= crypto.createHash('sha256').update(pass).digest('hex');
           const fullInfo=await Auth.findOne({
             where:{
-              [AuthRow.pass_hash]:passHash
+              [AuthRow.pass_hash]:passHash,
+              [AuthRow.login]:login
             }
           })
           if(!fullInfo){

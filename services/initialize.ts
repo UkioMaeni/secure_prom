@@ -52,7 +52,7 @@ export async function initialize(){
             [WhiteEmailListRow.email]:'priz.a47@gmail.com'
         }
     })
-    await Auth.sync();
+    await Auth.sync({alter:true,});
     await AdminAuth.sync()
     await AdminAuth.findOrCreate({
         where:{

@@ -4,10 +4,12 @@ import { DataTypes, Model } from 'sequelize';
 export enum AuthRow{
     id="id",
     pass_hash="pass_hash",
+    login="login",
 }
 class Auth extends Model{
     declare id:number;
     declare passHash:string;
+    declare login:string;
 }
 Auth.init(
     {   
@@ -20,13 +22,18 @@ Auth.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
+        login: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
     },
     {
         
         tableName:"auth",
         sequelize,
         createdAt:false,
-        updatedAt:false
+        updatedAt:false,
+        
     }
     )
   export default  Auth;
