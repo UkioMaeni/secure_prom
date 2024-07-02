@@ -6,6 +6,7 @@ import WhiteEmailList,{WhiteEmailListRow} from '../models/whiteEmailList';
 import AdminAuth,{AdminAuthRow} from '../models/adminAuth';
 import Settings, { SettingsRow } from '../models/settings';
 import PbList from '../models/PbList';
+import { where } from 'sequelize';
 
 
  
@@ -14,15 +15,18 @@ import PbList from '../models/PbList';
 
 export async function initialize(){
     await Settings.sync()
-    await Settings.findOrCreate({
-        where:{
-            [SettingsRow.name]:'lastMail'
-        },
-        defaults:{
+    await Settings.update({
+        
             [SettingsRow.name]:'lastMail',
-            [SettingsRow.value]:11069
+            [SettingsRow.value]:0
+        },
+        {
+            where:{
+                [SettingsRow.name]:'lastMail',
+                
+            }
         }
-    })
+    )
     await Settings.findOrCreate({
         where:{
             [SettingsRow.name]:'update'

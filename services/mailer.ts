@@ -35,8 +35,8 @@ export const imapFlowConnect=async()=>{
             port: 993,
             secure: true,
             auth: {
-                user: 'priz.a@yandex.ru',
-                pass: '89045462751'
+                user: 'secure.kpp@yandex.ru',
+                pass: 'cenkzgotmstauzuy'
             },
             disableAutoIdle:true,
             logger:false,
