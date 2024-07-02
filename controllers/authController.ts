@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import FullInfo from '../models/full_info';
 import Auth, { AuthRow } from '../models/auth';
 import crypto = require('crypto');
+import PbList, { PbListRow } from '../models/PbList';
 type ControllerFunction = (req: Request, res: Response) => void;
 
 class AuthController {
@@ -14,10 +15,10 @@ class AuthController {
           }
 
           const passHash= crypto.createHash('sha256').update(pass).digest('hex');
-          const fullInfo=await Auth.findOne({
+          const fullInfo=await PbList.findOne({
             where:{
-              [AuthRow.pass_hash]:passHash,
-              [AuthRow.login]:login
+              [PbListRow.passHash]:passHash,
+              [PbListRow.login]:login
             }
           })
           if(!fullInfo){
