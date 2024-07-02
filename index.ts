@@ -20,20 +20,20 @@ app.use("/api",authRouter)
 app.use("/api",adminPanelRouter)
 //imapFlowConnect();
 //excel.parseInit()
-const options = {
-    key: fs.readFileSync(path.join(__dirname, 'privateKey.key')),
-    cert: fs.readFileSync(path.join(__dirname, 'certificate.crt'))
-};
-const PORT = 3005;
+// const options = {
+//     key: fs.readFileSync(path.join(__dirname, 'privateKey.key')),
+//     cert: fs.readFileSync(path.join(__dirname, 'certificate.crt'))
+// };
+const PORT = process.env.PORT;
 http.createServer(app).listen(PORT, async() => {
    await initialize();
    setInterval(()=>{
     imapFlowConnect();
-    },1000*60);
+    },1000*20);
    //imapFlowConnect()
    console.log(mailWorker);
     //excel.createJurnal();
-    console.log('HTTPS server running on https://localhost:3000');
+    console.log('HTTPS server running on https://localhost:'+PORT);
 });
 
 // const nameS = 'меня зовут ';

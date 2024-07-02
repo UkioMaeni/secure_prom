@@ -154,14 +154,19 @@ export const imapFlowConnect=async()=>{
         console.error(e);
     } finally {
         // Make sure lock is released, otherwise next `getMailboxLock()` never returns
-        console.log("CLIENT unlocked");
-        if(lock){
-            lock.release();
-        }
-        
-        console.log("CLIENT logout");
-        if(client){
-            await client.logout();
+        try {
+            console.log("CLIENT unlocked");
+            if(lock){
+                lock.release();
+            }
+            
+            console.log("CLIENT logout");
+            if(client){
+                await client.logout();
+            }
+        } catch (error) {
+            console.log(error);
+            
         }
         
     }

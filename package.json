@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --exec ts-node index.ts"
+    "dev": "nodemon --exec ts-node index.ts",
+    "preinstall":"node preinstall.js",
+    "prod": "npm run preinstall && npm run dev"
   },
   "author": "",
   "license": "ISC",
