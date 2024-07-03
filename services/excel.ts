@@ -90,6 +90,7 @@ class ExcelTOOL{
                 [SettingsRow.name]:"update",
             }
         })
+        console.log("start parsing");
         
     const workBook= xlsx.readFile(path.join(__dirname+"/../temp/"+pathToFile))
     
