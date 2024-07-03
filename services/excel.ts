@@ -78,6 +78,8 @@ class ExcelTOOL{
                 [SettingsRow.name]:"update"
             }
         });
+        console.log(setting);
+        
         if(!setting||setting.value==1){
             return;
         }
