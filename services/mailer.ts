@@ -22,13 +22,22 @@ import Settings, { SettingsRow } from '../models/settings';
 import WhiteEmailList, { WhiteEmailListRow } from '../models/whiteEmailList';
 import excel from './excel';
     
+
+const timer=async()=>{
+    const promise = new Promise((resolve) => {
+        setTimeout(resolve, 10000);
+      });
+      await promise;
+}
+
 export const imapFlowConnect=async()=>{
    
     
     
     // Select and lock a mailbox. Throws if mailbox does not exist
-    let lock:MailboxLockObject;
-    let client:ImapFlow;
+    let lock:MailboxLockObject|null;
+    let client:ImapFlow|null;
+    
     try {
         const client = new ImapFlow({
             host: 'imap.yandex.ru',
@@ -42,11 +51,14 @@ export const imapFlowConnect=async()=>{
             logger:false,
             logRaw:false,
             emitLogs:false,
-            greetingTimeout:30000
+            greetingTimeout:5000
             
         });
         await client.connect();
+        
+           
          lock = await client.getMailboxLock('INBOX',);
+        
         console.log(client.mailbox );
         const obj:MailboxObject=client.mailbox as MailboxObject;
         console.log(obj.exists);
@@ -151,11 +163,13 @@ export const imapFlowConnect=async()=>{
         
        
     }catch(e){
+        console.log("error in mailer");
+
+        
         console.error(e);
     } finally {
         // Make sure lock is released, otherwise next `getMailboxLock()` never returns
-        try {
-            console.log("CLIENT unlocked");
+        console.log("CLIENT unlocked");
             if(lock){
                 lock.release();
             }
@@ -164,10 +178,6 @@ export const imapFlowConnect=async()=>{
             if(client){
                 await client.logout();
             }
-        } catch (error) {
-            console.log(error);
-            
-        }
         
     }
 
@@ -176,6 +186,7 @@ export const imapFlowConnect=async()=>{
 
 
 export const sendMail=async(path:string,name:string)=>{
+   try {
     const transporter = nodemailer.createTransport({
         service:"yandex",
         auth: {
@@ -199,4 +210,8 @@ export const sendMail=async(path:string,name:string)=>{
                 console.log(err);
                 
             });
+   } catch (error) {
+    console.log(error);
+    
+   }
 }
