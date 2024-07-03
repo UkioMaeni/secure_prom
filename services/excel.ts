@@ -129,7 +129,7 @@ class ExcelTOOL{
                 const year=date.getFullYear().toString().slice(2);
                 const updatedStr = (date.getMonth()==0?"12":date.getMonth())+"/"+date.getDate()+"/"+year
                 promSecure=updatedStr;
-                console.log(promSecure);
+                
                 
             }
 
