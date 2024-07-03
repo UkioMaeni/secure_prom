@@ -73,6 +73,14 @@ class ExcelTOOL{
     }
     syncToDB=async(pathToFile:string):Promise<void>=>{
        try {
+        const setting=  await Settings.findOne({
+            where:{
+                [SettingsRow.name]:"update"
+            }
+        });
+        if(!setting||setting.value==1){
+            return;
+        }
         await Settings.update({
             [SettingsRow.value]:1,
         },{
