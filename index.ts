@@ -13,6 +13,17 @@ import authRouter from './routes/authRouter';
 import adminPanelRouter from './routes/adminPanelRouter';
 import cors = require('cors');
 import { mailWorker } from './services/cron';
+import process = require('node:process');
+
+process.on('uncaughtException', (err, origin) => {
+    console.log(err);
+    console.log(origin);
+    fs.writeSync(
+      process.stderr.fd,
+      `Caught exception: ${err}\n` +
+      `Exception origin: ${origin}\n`,
+    );
+  });
 app.use(express.json())
 app.use(cors())
 app.use("/api",dataRouter)
