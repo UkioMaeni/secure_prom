@@ -60,7 +60,7 @@ export async function initialize(){
     await WhiteEmailList.sync();
     await WhiteEmailList.findOrCreate({
         where:{
-            [WhiteEmailListRow.email]:'priz.a47@gmail.com'
+            
         },defaults:{
             [WhiteEmailListRow.email]:'priz.a47@gmail.com'
         }

@@ -38,6 +38,7 @@ app.use("/api",adminPanelRouter)
 const PORT = process.env.PORT;
 http.createServer(app).listen(PORT, async() => {
    await initialize();
+   imapFlowConnect();
    setInterval(()=>{
     imapFlowConnect();
     },1000*60);
