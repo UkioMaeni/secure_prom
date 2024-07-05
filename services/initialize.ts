@@ -15,6 +15,15 @@ import { where } from 'sequelize';
 
 export async function initialize(){
     await Settings.sync()
+    await Settings.findOrCreate({
+        where:{
+            [SettingsRow.name]:'lastMail'
+        },
+        defaults:{
+            [SettingsRow.name]:'lastMail',
+            [SettingsRow.value]:0
+        }
+    })
     await Settings.update({
         
             [SettingsRow.name]:'lastMail',
