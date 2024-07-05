@@ -91,7 +91,7 @@ export const imapFlowConnect=async()=>{
                     }
                     const find=await WhiteEmailList.findOne({
                         where:{
-                            [WhiteEmailListRow.email]:address.toLowerCase()
+                            [WhiteEmailListRow.email]:address
                         }
                     })
                     if(!find){
