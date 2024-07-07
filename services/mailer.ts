@@ -205,7 +205,7 @@ export const sendMail=async(pathJurnal:string,nameJurnal:string,pathDb:string,na
       });
         const message = {
                 from: "secure.kpp@yandex.ru",
-                to: "priz.a47@gmail.com",
+                to: email.email,
                 subject: 'Журнал и база',
                 text: "Отчет",
                 attachments:[
