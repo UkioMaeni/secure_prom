@@ -7,6 +7,8 @@ import AdminAuth,{AdminAuthRow} from '../models/adminAuth';
 import Settings, { SettingsRow } from '../models/settings';
 import PbList from '../models/PbList';
 import { where } from 'sequelize';
+import Jurnal from '../models/jurnal';
+import JurnalHistory from '../models/jurnal_history';
 
 
  
@@ -14,6 +16,8 @@ import { where } from 'sequelize';
 
 
 export async function initialize(){
+    await Jurnal.sync()
+    await JurnalHistory.sync()
     await Settings.sync()
     await Settings.findOrCreate({
         where:{

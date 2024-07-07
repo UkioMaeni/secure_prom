@@ -7,6 +7,7 @@ import Settings, { SettingsRow } from '../models/settings';
 import Jurnal from '../models/jurnal';
 import { sendMail } from './mailer';
 import XlsxPopulate = require('xlsx-populate');
+import sequelize from '../db/postgres/postgresDb';
 class ExcelTOOL{
     private requiredDocData(xlsx:xlsx.WorkSheet):boolean{
         console.log(xlsx["A1"]["w"]);
@@ -72,6 +73,7 @@ class ExcelTOOL{
         //req
     }
     syncToDB=async(pathToFile:string):Promise<void>=>{
+        const transaction = await sequelize.transaction()
        try {
         const setting=  await Settings.findOne({
             where:{
@@ -99,7 +101,7 @@ class ExcelTOOL{
     const dataCount=sheet["!ref"].split(":");
     const regex = /\d+/;
     const match = dataCount[1].match(regex);
-    await FullInfo.truncate();
+    
     let endRow:number=0;
     if (match) {
         const number = parseInt(match[0]);
@@ -110,6 +112,11 @@ class ExcelTOOL{
         } else {
         console.log('No number found');
         }
+        let fullInfoList:Array<FullInfo>=[] 
+        fullInfoList=await FullInfo.findAll()
+        console.log(fullInfoList.length);
+        
+        await FullInfo.truncate({transaction});
         for(let j=3;j<=endRow;j++){
         
             const fullName=sheet["A"+j]?.["w"]??null;
@@ -155,9 +162,9 @@ class ExcelTOOL{
             let infoSecure=sheet["H"+j]?.["w"]??null;
             if(infoSecure && sheet["H2"]?.["w"]!=null){
                 const date=new Date();
-                date.setFullYear(parseInt("20"+promSecureOblast.split("/")[2]));
-                date.setMonth(parseInt(promSecureOblast.split("/")[0])-1);
-                date.setDate(parseInt(promSecureOblast.split("/")[1]))
+                date.setFullYear(parseInt("20"+infoSecure.split("/")[2]));
+                date.setMonth(parseInt(infoSecure.split("/")[0])-1);
+                date.setDate(parseInt(infoSecure.split("/")[1]))
                 const addedMonth=parseInt(sheet["H2"]?.["w"])
                 date.setMonth(date.getMonth()+addedMonth)
                 const year=date.getFullYear().toString().slice(2);
@@ -291,8 +298,8 @@ class ExcelTOOL{
             const PB_12=sheet["AE"+j]?.["w"]??null;
             //end
 
-            const lastInputDate=sheet["AK"+j]?.["w"]??null;
-            const lastInputKPP=sheet["AL"+j]?.["w"]??null;
+            let lastInputDate=sheet["AK"+j]?.["w"]??null;
+            let lastInputKPP=sheet["AL"+j]?.["w"]??null;
             const medicalType=sheet["AJ"+j]?.["w"]??null;
             let passDate=sheet["AM"+j]?.["w"]??null;
             if(passDate){
@@ -307,7 +314,51 @@ class ExcelTOOL{
                 passDate=updatedStr;
             }
             const passStatus=sheet["AN"+j]?.["w"]??null;
-
+            const info =new FullInfo()
+            info.fullName=fullName;
+            info.propuskNumber=propuskNumber;
+            info.organization=organization;
+            info.professionals=professionals;
+            info.medical=medical;
+            info.promSecure=promSecure;
+            info.infoSecure=infoSecure;
+            info.workSecure=workSecure;
+            info.medicalHelp=medicalHelp;
+            info.fireSecure=fireSecure;
+            info.winterDriver=winterDriver;
+            info.workInHeight=workInHeight;
+            info.workInHeightGroup=workInHeightGroup;
+            info.GPVPGroup=GPVPGroup;
+            info.GNVPGroup=GNVPGroup;
+            info.VOZTest=VOZTest;
+            info.VOZProfessional=VOZProfessional;
+            info.promSecureOblast=promSecureOblast;
+            info.electroSecureGroup=electroSecureGroup;
+            info.electroSecure=electroSecure;
+            info.driverPermit=driverPermit;
+            info.burAndVSR=burAndVSR;
+            info.KSAndCMP=KSAndCMP;
+            info.transport=transport;
+            info.energy=energy;
+            info.GT=GT;
+            info.PPDU=PPDU;
+            info.CA=CA;
+            info.KP_2=KP_2;
+            info.PB_11=PB_11;
+            info.PB_12=PB_12;
+            info.medicalType=medicalType;
+            info.lastInputDate=lastInputDate;
+            info.lastInputKPP=lastInputKPP;
+            info.passStatus=passStatus;
+            info.passDate=passDate;
+           
+            const value= fullInfoList.filter(element=>element.propuskNumber==propuskNumber)
+            if(value.length>0){
+                lastInputDate=value[0].lastInputDate
+                lastInputKPP=value[0].lastInputKPP
+            }
+            
+            
             await FullInfo.create({
                 [FullInfoRow.fullName]:fullName,
                 [FullInfoRow.propuskNumber]:propuskNumber,
@@ -345,9 +396,15 @@ class ExcelTOOL{
                 [FullInfoRow.lastInputKPP]:lastInputKPP,
                 [FullInfoRow.passStatus]:passStatus,
                 [FullInfoRow.passDate]:passDate,
-            })
-        } 
+            },{transaction})
+            console.log("Запись создана");
+            if(value.length>0){
+                console.log("Запись обновлена");
+            }
+        }
+        await transaction.commit()
        } catch (error) {
+        transaction.rollback()
         console.log(error);
         
        } finally{
@@ -366,7 +423,7 @@ class ExcelTOOL{
 
         //jurnal
         const jurnal=await Jurnal.findAll()
-        console.log(jurnal);
+        
         const jurnalName="Журнал "+new Date().toLocaleDateString()+".xlsx";
         fs.copyFileSync(__dirname+"/../temp/jurnal_example.xlsx",__dirname+"/../temp/"+jurnalName);
         XlsxPopulate.fromFileAsync(__dirname+"/../temp/"+jurnalName)
@@ -650,16 +707,7 @@ class ExcelTOOL{
                 
             });    
             await sendMail(__dirname+"/../temp/"+jurnalName,jurnalName,__dirname+"/../temp/"+dbName,dbName);
-        // const workBook= xlsx.readFile(path.join(__dirname+"/../temp/"+name));
-        // const mySheet = workBook.Sheets['Лист1'];
-        
-        
-        
-        // xlsx.utils.sheet_add_aoa(mySheet,[['2','3','4']],{origin:1,WTF:true})
-        // mySheet["A2"]="ds"
-        // xlsx.writeFile(workBook,__dirname+"/../temp/"+name)
-        
-        
+
     }
     
 }

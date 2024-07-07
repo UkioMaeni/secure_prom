@@ -14,6 +14,7 @@ import adminPanelRouter from './routes/adminPanelRouter';
 import cors = require('cors');
 import { mailWorker, senderWorker } from './services/cron';
 import process = require('node:process');
+import { sendJurnalAndDb } from './services/senderJurnalAndDb';
 
 process.on('uncaughtException', (err, origin) => {
     console.log(err);
@@ -43,7 +44,7 @@ http.createServer(app).listen(PORT, async() => {
   //   imapFlowConnect();
   //   },1000*60);
   console.log(senderWorker);
-  
+  sendJurnalAndDb();
   mailWorker.start()
   senderWorker.start()
    //imapFlowConnect()

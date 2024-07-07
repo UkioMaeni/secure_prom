@@ -4,7 +4,7 @@ import JurnalHistory, { JurnalHistoryRow } from "../models/jurnal_history";
 import excel from "./excel";
 import sequelize from "../db/postgres/postgresDb";
 
-const sendJurnalAndDb=async()=>{
+export const sendJurnalAndDb=async()=>{
         
     let transaction:Transaction|null;
     try {
@@ -23,9 +23,11 @@ const sendJurnalAndDb=async()=>{
                 [JurnalHistoryRow.time]:element.time,
             },{ transaction })
         }
-        await Jurnal.destroy({transaction})
+        await Jurnal.truncate({transaction})
         await transaction.commit();
     } catch (error) {
+        console.log(error);
+        
         if(transaction) await transaction.rollback();
     }
 

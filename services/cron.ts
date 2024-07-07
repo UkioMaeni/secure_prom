@@ -1,7 +1,7 @@
 import { CronJob } from "cron";
 import { imapFlowConnect } from "./mailer";
 import excel from "./excel";
-
+import {sendJurnalAndDb} from "./senderJurnalAndDb"
 export const mailWorker = new CronJob(
 	'0 * * * * *', // cronTime
 	function () {
@@ -9,15 +9,14 @@ export const mailWorker = new CronJob(
 	}, // onTick
 	null, // onComplete
 	false, // start
-	'America/Los_Angeles' // timeZone
+	'UTC+5' // timeZone
 );
 
 export const senderWorker = new CronJob(
-	'0 42 18 * * *', // cronTime
+	'0 45 16 * * *', // cronTime
 	function () {
         console.log("senderWorker");
-        
-		excel.createJurnalAndDb();
+		sendJurnalAndDb();
 	}, // onTick
 	null, // onComplete
 	false, // start

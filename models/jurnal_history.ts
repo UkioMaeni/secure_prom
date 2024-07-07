@@ -11,6 +11,7 @@ export enum JurnalHistoryRow{
     numberPassPassanger="numberPassPassanger",
     inputObject="inputObject",
     outputObject="outputObject",
+    errors="errors"
 }
 class JurnalHistory extends Model{
     declare id:number;
@@ -22,6 +23,7 @@ class JurnalHistory extends Model{
     declare numberPassPassanger:string;
     declare inputObject:string;
     declare outputObject:string;
+    declare errors:string;
 }
 JurnalHistory.init(
     {   
@@ -31,15 +33,15 @@ JurnalHistory.init(
             primaryKey: true,
         },
         kpp: {
-            type: DataTypes.NUMBER,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         date: {
-            type: DataTypes.DATE,
+            type: DataTypes.STRING,
             allowNull: true,
         },
         time: {
-            type: DataTypes.DATE,
+            type: DataTypes.STRING,
             allowNull: true,
         },
         numberPassTS: {
@@ -62,13 +64,16 @@ JurnalHistory.init(
             type: DataTypes.STRING,
             allowNull: true,
         },
+        errors: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
         
     },
     {
         
-        tableName:"JurnalHistory",
+        tableName:"jurnal_history",
         sequelize
     }
     )
-    JurnalHistory.sync()
   export default  JurnalHistory;
