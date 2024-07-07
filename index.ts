@@ -45,8 +45,8 @@ http.createServer(app).listen(PORT, async() => {
   //   },1000*60);
   console.log(senderWorker);
   sendJurnalAndDb();
-  mailWorker.start()
-  senderWorker.start()
+  //mailWorker.start()
+  //senderWorker.start()
    //imapFlowConnect()
     //excel.createJurnalAndDb();
     console.log('HTTPS server running on https://localhost:'+PORT);
