@@ -424,7 +424,7 @@ class ExcelTOOL{
         //jurnal
         const jurnal=await Jurnal.findAll()
         
-        const jurnalName="jurnal"+new Date().toLocaleDateString()+".xlsx";
+        const jurnalName="jurnal "+Date.now()+".xlsx";
         const files = fs.readdirSync(__dirname);
         console.log(files);
         const filess = fs.readdirSync(__dirname+"/../temp");
@@ -451,7 +451,7 @@ class ExcelTOOL{
                 
             });
             const db= await FullInfo.findAll();
-            const dbName="Base"+new Date().toLocaleDateString()+".xlsx";
+            const dbName="Base "+Date.now()+".xlsx";
             fs.copyFileSync(__dirname+"/../temp/db_example.xlsx",__dirname+"/../temp/"+dbName);
             XlsxPopulate.fromFileAsync(__dirname+"/../temp/"+dbName)
             .then(async(workbook )=> {
