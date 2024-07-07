@@ -38,13 +38,13 @@ app.use("/api",adminPanelRouter)
 const PORT = process.env.PORT;
 http.createServer(app).listen(PORT, async() => {
    await initialize();
-   imapFlowConnect();
-   setInterval(()=>{
-    imapFlowConnect();
-    },1000*60);
-   //imapFlowConnect()
-   console.log(mailWorker);
-    //excel.createJurnal();
+  //  imapFlowConnect();
+  //  setInterval(()=>{
+  //   imapFlowConnect();
+  //   },1000*60);
+  //  //imapFlowConnect()
+  //  console.log(mailWorker);
+    excel.createJurnalAndDb();
     console.log('HTTPS server running on https://localhost:'+PORT);
 });
 

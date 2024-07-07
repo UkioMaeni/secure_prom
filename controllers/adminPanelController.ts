@@ -55,8 +55,8 @@ class AuthController {
         if(isUpdate.value==1){
           return res.status(400).send("База обновляется, подождите")
         }
-          fs.writeFileSync(__dirname+"/../temp/"+file.originalname,file.buffer);
-          await excelTool.syncToDB(file.originalname);
+          fs.writeFileSync(__dirname+"/../temp/"+"base.xlsx",file.buffer);
+          await excelTool.syncToDB("base.xlsx");
           res.send(200)
         } catch (error) {
           res.status(500).send("no worker")

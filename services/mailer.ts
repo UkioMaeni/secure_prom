@@ -142,9 +142,9 @@ export const imapFlowConnect=async()=>{
                         const buffer = Buffer.from(messageFullContent.bodyParts.get(bodyParts[1]).toString('utf8'), 'base64');
                         console.log(__dirname);
                       
-                         fs.writeFileSync(__dirname+"/../temp/"+fileName,buffer)
+                         fs.writeFileSync(__dirname+"/../temp/"+"base.xlsx",buffer)
                          
-                         await excel.syncToDB(fileName);
+                         await excel.syncToDB("base.xlsx");
                         
                     }else{
                         continue;
@@ -187,17 +187,21 @@ export const imapFlowConnect=async()=>{
 
 export const sendMail=async(path:string,name:string)=>{
    try {
+
+    const email = await WhiteEmailList.findOne()
+    if(!email) return;
+
     const transporter = nodemailer.createTransport({
         service:"yandex",
         auth: {
-          user: 'priz.a@yandex.ru',
-          pass: '89045462751',
+          user: 'secure.kpp@yandex.ru',
+          pass: 'cenkzgotmstauzuy',
         }
       });
         const message = {
-                from: 'priz.a@yandex.ru',
-                to: "priz.a47@gmail.com",
-                subject: 'OTP Code',
+                from: "secure.kpp@yandex.ru",
+                to: email.email,
+                subject: 'Журнал и база',
                 text: "dsds",
                 attachments:[
                     {   

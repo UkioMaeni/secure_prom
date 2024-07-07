@@ -39,6 +39,7 @@ export enum FullInfoRow{
     lastInputKPP="lastInputKPP",
     passStatus="passStatus",
     passDate="passDate",
+    
 }
 class FullInfo extends Model{
     declare id:number;
@@ -54,7 +55,9 @@ class FullInfo extends Model{
     declare workSecure:string;
     declare medicalHelp:string;
     declare fireSecure:string;
-    declare groupEB:string;
+    declare electroSecure:string;
+    declare electroSecureGroup:string;
+    declare driverPermit:string;
     declare winterDriver:string;
     declare workInHeight:string;
     declare workInHeightGroup:string;
@@ -62,10 +65,21 @@ class FullInfo extends Model{
     declare GNVPGroup:string;
     declare VOZTest:string;
     declare VOZProfessional:string;
+    declare burAndVSR:string;
+    declare KSAndCMP:string;
+    declare transport:string;
+    declare energy:string;
+    declare GT:string;
+    declare PPDU:string;
+    declare CA:string;
+    declare KP_2:string;
+    declare PB_11:string;
+    declare PB_12:string;
     declare lastInputDate:string;
     declare lastInputKPP:string;
     declare passStatus:string;
     declare passDate:string;
+    declare medicalType:string
 }
 FullInfo.init(
     {   
@@ -218,7 +232,6 @@ FullInfo.init(
             type: DataTypes.STRING,
             allowNull: true,
         },
-
         
     },
     {
