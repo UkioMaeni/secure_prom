@@ -424,12 +424,12 @@ class ExcelTOOL{
         //jurnal
         const jurnal=await Jurnal.findAll()
         
-        const jurnalName="Журнал"+new Date().toLocaleDateString()+".xlsx";
+        const jurnalName="jurnal"+new Date().toLocaleDateString()+".xlsx";
         const files = fs.readdirSync(__dirname);
         console.log(files);
         const filess = fs.readdirSync(__dirname+"/../temp");
         console.log(filess);
-        fs.copyFileSync(__dirname+"/../temp/jurnal_example.xlsx",__dirname+"/../temp/dasa.xlsx");
+        fs.copyFileSync(__dirname+"/../temp/jurnal_example.xlsx",__dirname+"/../temp/"+jurnalName);
         XlsxPopulate.fromFileAsync(__dirname+"/../temp/"+jurnalName)
             .then(async(workbook )=> {
                 // Modify the workbook.
@@ -451,7 +451,7 @@ class ExcelTOOL{
                 
             });
             const db= await FullInfo.findAll();
-            const dbName="БАЗА "+new Date().toLocaleDateString()+".xlsx";
+            const dbName="Base"+new Date().toLocaleDateString()+".xlsx";
             fs.copyFileSync(__dirname+"/../temp/db_example.xlsx",__dirname+"/../temp/"+dbName);
             XlsxPopulate.fromFileAsync(__dirname+"/../temp/"+dbName)
             .then(async(workbook )=> {
