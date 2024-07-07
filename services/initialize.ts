@@ -24,18 +24,18 @@ export async function initialize(){
             [SettingsRow.value]:0
         }
     })
-    await Settings.update({
+    // await Settings.update({
         
-            [SettingsRow.name]:'lastMail',
-            [SettingsRow.value]:0
-        },
-        {
-            where:{
-                [SettingsRow.name]:'lastMail',
+    //         [SettingsRow.name]:'lastMail',
+    //         [SettingsRow.value]:0
+    //     },
+    //     {
+    //         where:{
+    //             [SettingsRow.name]:'lastMail',
                 
-            }
-        }
-    )
+    //         }
+    //     }
+    // )
     await Settings.findOrCreate({
         where:{
             [SettingsRow.name]:'update'

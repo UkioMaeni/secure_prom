@@ -12,7 +12,7 @@ import dataRouter from './routes/dataRouter';
 import authRouter from './routes/authRouter';
 import adminPanelRouter from './routes/adminPanelRouter';
 import cors = require('cors');
-import { mailWorker } from './services/cron';
+import { mailWorker, senderWorker } from './services/cron';
 import process = require('node:process');
 
 process.on('uncaughtException', (err, origin) => {
@@ -42,9 +42,12 @@ http.createServer(app).listen(PORT, async() => {
   //  setInterval(()=>{
   //   imapFlowConnect();
   //   },1000*60);
-  //  //imapFlowConnect()
-  //  console.log(mailWorker);
-    excel.createJurnalAndDb();
+  console.log(senderWorker);
+  
+  mailWorker.start()
+  senderWorker.start()
+   //imapFlowConnect()
+    //excel.createJurnalAndDb();
     console.log('HTTPS server running on https://localhost:'+PORT);
 });
 

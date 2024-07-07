@@ -215,7 +215,18 @@ class ExcelTOOL{
             }
             const electroSecureGroup=sheet["M"+j]?.["w"]??null;//new
             const driverPermit=sheet["N"+j]?.["w"]??null;//new
-            const winterDriver=sheet["O"+j]?.["w"]??null;
+            let winterDriver=sheet["O"+j]?.["w"]??null;
+            if(winterDriver){
+                const date=new Date();
+                date.setFullYear(parseInt("20"+winterDriver.split("/")[2]));
+                date.setMonth(parseInt(winterDriver.split("/")[0])-1);
+                date.setDate(parseInt(winterDriver.split("/")[1]))
+                const addedMonth=0
+                date.setMonth(date.getMonth()+addedMonth)
+                const year=date.getFullYear().toString().slice(2);
+                const updatedStr = (date.getMonth()+1)+"/"+date.getDate()+"/"+year
+                winterDriver=updatedStr;
+            }
             let workInHeight=sheet["P"+j]?.["w"]??null;
             if(workInHeight && sheet["P2"]?.["w"]!=null){
                 const date=new Date();
@@ -283,7 +294,18 @@ class ExcelTOOL{
             const lastInputDate=sheet["AK"+j]?.["w"]??null;
             const lastInputKPP=sheet["AL"+j]?.["w"]??null;
             const medicalType=sheet["AJ"+j]?.["w"]??null;
-            const passDate=sheet["AM"+j]?.["w"]??null;
+            let passDate=sheet["AM"+j]?.["w"]??null;
+            if(passDate){
+                const date=new Date();
+                date.setFullYear(parseInt("20"+passDate.split("/")[2]));
+                date.setMonth(parseInt(passDate.split("/")[0])-1);
+                date.setDate(parseInt(passDate.split("/")[1]))
+                const addedMonth=0
+                date.setMonth(date.getMonth()+addedMonth)
+                const year=date.getFullYear().toString().slice(2);
+                const updatedStr = (date.getMonth()+1)+"/"+date.getDate()+"/"+year
+                passDate=updatedStr;
+            }
             const passStatus=sheet["AN"+j]?.["w"]??null;
 
             await FullInfo.create({
@@ -369,7 +391,7 @@ class ExcelTOOL{
             });
             const db= await FullInfo.findAll();
             const dbName="БАЗА "+new Date().toLocaleDateString()+".xlsx";
-            fs.copyFileSync(__dirname+"/../temp/base.xlsx",__dirname+"/../temp/"+dbName);
+            fs.copyFileSync(__dirname+"/../temp/db_example.xlsx",__dirname+"/../temp/"+dbName);
             XlsxPopulate.fromFileAsync(__dirname+"/../temp/"+dbName)
             .then(async(workbook )=> {
                 // Modify the workbook.
@@ -399,14 +421,18 @@ class ExcelTOOL{
                     const promSecureDuration=workbook.sheet("Лист1").cell(`F2`).value();
                     let promSecure_formatted;
                     if(promSecure && promSecureDuration){
-                        const date = new Date(parseInt("20"+promSecure.split("/")[2]), parseInt(promSecure.split("/")[0]), parseInt(promSecure.split("/")[1]));
+                        const date=new Date();
+                        date.setFullYear(parseInt("20"+promSecure.split("/")[2]));
+                        date.setMonth(parseInt(promSecure.split("/")[0])-1);
+                        date.setDate(parseInt(promSecure.split("/")[1]))
+                        
+                        
                         const addedMonth=parseInt(promSecureDuration)
-                        element.propuskNumber=="24294"&& console.log(date);
-                        element.propuskNumber=="24294"&&console.log(addedMonth);
-                        date.setMonth(date.getMonth()-addedMonth-1)
-                        element.propuskNumber=="24294"&&console.log(date);
+                        date.setMonth(date.getMonth()-addedMonth)
+                        
+                        
                         const year=date.getFullYear().toString().slice(2);
-                        const updatedStr = (date.getMonth()==0?"12":date.getMonth())+"/"+date.getDate()+"/"+(date.getMonth()==0?(parseInt(year)-1):year)
+                        const updatedStr = (date.getMonth()+1)+"/"+date.getDate()+"/"+(date.getMonth()==0?(parseInt(year)-1):year)
                         promSecure=updatedStr;
                         promSecure_formatted=date;
                     }
@@ -415,107 +441,176 @@ class ExcelTOOL{
 
                     let infoSecure= element.infoSecure;
                     const infoSecureDuration=workbook.sheet("Лист1").cell(`H2`).value();
+                    let infoSecure_formatted;
                     if(infoSecure && infoSecureDuration){
-                        const date = new Date(parseInt("20"+infoSecure.split("/")[2]), parseInt(infoSecure.split("/")[0]), parseInt(infoSecure.split("/")[1]));
+                        const date=new Date();
+                        date.setFullYear(parseInt("20"+infoSecure.split("/")[2]));
+                        date.setMonth(parseInt(infoSecure.split("/")[0])-1);
+                        date.setDate(parseInt(infoSecure.split("/")[1]))
+
                         const addedMonth=parseInt(infoSecureDuration)
                         date.setMonth(date.getMonth()-addedMonth)
                         const year=date.getFullYear().toString().slice(2);
                         const updatedStr = (date.getMonth()==0?"12":date.getMonth())+"/"+date.getDate()+"/"+(date.getMonth()==0?(parseInt(year)-1):year)
-                        infoSecure=updatedStr;
+                        infoSecure_formatted=date;
                     }
-                    workbook.sheet("Лист1").cell(`H${index+3}`).value(infoSecure);
+                    workbook.sheet("Лист1").cell(`H${index+3}`).value(infoSecure_formatted).style("numberFormat", "dd.mm.yyyy");
                     let workSecure= element.workSecure;
                     const workSecureDuration=workbook.sheet("Лист1").cell(`I2`).value();
+                    let workSecure_formatted;
                     if(workSecure && workSecureDuration){
-                        const date = new Date(parseInt("20"+workSecure.split("/")[2]), parseInt(workSecure.split("/")[0]), parseInt(workSecure.split("/")[1]));
+                        const date=new Date();
+                        date.setFullYear(parseInt("20"+workSecure.split("/")[2]));
+                        date.setMonth(parseInt(workSecure.split("/")[0])-1);
+                        date.setDate(parseInt(workSecure.split("/")[1]))
+
                         const addedMonth=parseInt(workSecureDuration)
                         date.setMonth(date.getMonth()-addedMonth)
                         const year=date.getFullYear().toString().slice(2);
                         const updatedStr = (date.getMonth()==0?"12":date.getMonth())+"/"+date.getDate()+"/"+(date.getMonth()==0?(parseInt(year)-1):year)
                         workSecure=updatedStr;
+                        workSecure_formatted=date;
                     }
-                    workbook.sheet("Лист1").cell(`I${index+3}`).value(workSecure);
+                    workbook.sheet("Лист1").cell(`I${index+3}`).value(workSecure_formatted).style("numberFormat", "dd.mm.yyyy");
                     let medicalHelp= element.medicalHelp;
                     const medicalHelpDuration=workbook.sheet("Лист1").cell(`J2`).value();
+                    let medicalHelp_formatted;
                     if(medicalHelp && medicalHelpDuration){
-                        const date = new Date(parseInt("20"+medicalHelp.split("/")[2]), parseInt(medicalHelp.split("/")[0]), parseInt(medicalHelp.split("/")[1]));
+                        const date=new Date();
+                        date.setFullYear(parseInt("20"+medicalHelp.split("/")[2]));
+                        date.setMonth(parseInt(medicalHelp.split("/")[0])-1);
+                        date.setDate(parseInt(medicalHelp.split("/")[1]))
+
                         const addedMonth=parseInt(medicalHelpDuration)
                         date.setMonth(date.getMonth()-addedMonth)
                         const year=date.getFullYear().toString().slice(2);
                         const updatedStr = (date.getMonth()==0?"12":date.getMonth())+"/"+date.getDate()+"/"+(date.getMonth()==0?(parseInt(year)-1):year)
                         medicalHelp=updatedStr;
+                        medicalHelp_formatted=date;
                     }
-                    workbook.sheet("Лист1").cell(`J${index+3}`).value(medicalHelp);
+                    workbook.sheet("Лист1").cell(`J${index+3}`).value(medicalHelp_formatted).style("numberFormat", "dd.mm.yyyy");
                     let fireSecure= element.fireSecure;
                     const fireSecureDuration=workbook.sheet("Лист1").cell(`K2`).value();
+                    let fireSecure_formatted;
                     if(fireSecure && fireSecureDuration){
-                        const date = new Date(parseInt("20"+fireSecure.split("/")[2]), parseInt(fireSecure.split("/")[0]), parseInt(fireSecure.split("/")[1]));
+                        const date=new Date();
+                        date.setFullYear(parseInt("20"+fireSecure.split("/")[2]));
+                        date.setMonth(parseInt(fireSecure.split("/")[0])-1);
+                        date.setDate(parseInt(fireSecure.split("/")[1]))
+
                         const addedMonth=parseInt(fireSecureDuration)
                         date.setMonth(date.getMonth()-addedMonth)
                         const year=date.getFullYear().toString().slice(2);
                         const updatedStr = (date.getMonth()==0?"12":date.getMonth())+"/"+date.getDate()+"/"+(date.getMonth()==0?(parseInt(year)-1):year)
                         fireSecure=updatedStr;
+                        fireSecure_formatted=date;
                     }
-                    workbook.sheet("Лист1").cell(`K${index+3}`).value(fireSecure);
+                    workbook.sheet("Лист1").cell(`K${index+3}`).value(fireSecure_formatted).style("numberFormat", "dd.mm.yyyy");
                     let electroSecure= element.electroSecure;
                     const electroSecureDuration=workbook.sheet("Лист1").cell(`L2`).value();
+                    let electroSecure_formatted;
                     if(electroSecure && electroSecureDuration){
-                        const date = new Date(parseInt("20"+electroSecure.split("/")[2]), parseInt(electroSecure.split("/")[0]), parseInt(electroSecure.split("/")[1]));
+                        const date=new Date();
+                        date.setFullYear(parseInt("20"+electroSecure.split("/")[2]));
+                        date.setMonth(parseInt(electroSecure.split("/")[0])-1);
+                        date.setDate(parseInt(electroSecure.split("/")[1]))
+
                         const addedMonth=parseInt(electroSecureDuration)
                         date.setMonth(date.getMonth()-addedMonth)
                         const year=date.getFullYear().toString().slice(2);
                         const updatedStr = (date.getMonth()==0?"12":date.getMonth())+"/"+date.getDate()+"/"+(date.getMonth()==0?(parseInt(year)-1):year)
                         electroSecure=updatedStr;
+                        electroSecure_formatted=date;
                     }
-                    workbook.sheet("Лист1").cell(`L${index+3}`).value(electroSecure);
+                    
+                    workbook.sheet("Лист1").cell(`L${index+3}`).value(electroSecure_formatted).style("numberFormat", "dd.mm.yyyy");
                     workbook.sheet("Лист1").cell(`M${index+3}`).value(element.electroSecureGroup);
                     workbook.sheet("Лист1").cell(`N${index+3}`).value(element.driverPermit);
-                    workbook.sheet("Лист1").cell(`O${index+3}`).value(element.winterDriver);
+                    let winterDriver= element.winterDriver;
+                    let winterDriver_formatted;
+                    if(winterDriver){
+                        const date=new Date();
+                        date.setFullYear(parseInt("20"+winterDriver.split("/")[2]));
+                        date.setMonth(parseInt(winterDriver.split("/")[0])-1);
+                        date.setDate(parseInt(winterDriver.split("/")[1]))
+
+                        const addedMonth=0
+                        date.setMonth(date.getMonth()-addedMonth)
+                        const year=date.getFullYear().toString().slice(2);
+                        const updatedStr = (date.getMonth()==0?"12":date.getMonth())+"/"+date.getDate()+"/"+(date.getMonth()==0?(parseInt(year)-1):year)
+                        electroSecure=updatedStr;
+                        winterDriver_formatted=date;
+                    }
+                    workbook.sheet("Лист1").cell(`O${index+3}`).value(winterDriver_formatted).style("numberFormat", "dd.mm.yyyy");
                     let workInHeight= element.workInHeight;
                     const workInHeightDuration=workbook.sheet("Лист1").cell(`P2`).value();
+                    let workInHeight_formatted;
                     if(workInHeight && electroSecureDuration){
-                        const date = new Date(parseInt("20"+workInHeight.split("/")[2]), parseInt(workInHeight.split("/")[0]), parseInt(workInHeight.split("/")[1]));
+                        const date=new Date();
+                        date.setFullYear(parseInt("20"+workInHeight.split("/")[2]));
+                        date.setMonth(parseInt(workInHeight.split("/")[0])-1);
+                        date.setDate(parseInt(workInHeight.split("/")[1]))
+
                         const addedMonth=parseInt(workInHeightDuration)
                         date.setMonth(date.getMonth()-addedMonth)
                         const year=date.getFullYear().toString().slice(2);
                         const updatedStr = (date.getMonth()==0?"12":date.getMonth())+"/"+date.getDate()+"/"+(date.getMonth()==0?(parseInt(year)-1):year)
                         workInHeight=updatedStr;
+                        workInHeight_formatted=date;
                     }
-                    workbook.sheet("Лист1").cell(`P${index+3}`).value(workInHeight);
+                    workbook.sheet("Лист1").cell(`P${index+3}`).value(workInHeight_formatted).style("numberFormat", "dd.mm.yyyy");
                     workbook.sheet("Лист1").cell(`Q${index+3}`).value(element.workInHeightGroup);
                     let GPVPGroup= element.GPVPGroup;
                     const GPVPGroupDuration=workbook.sheet("Лист1").cell(`R2`).value();
+                    let GPVPGroup_formatted;
                     if(GPVPGroup && GPVPGroupDuration){
-                        const date = new Date(parseInt("20"+GPVPGroup.split("/")[2]), parseInt(GPVPGroup.split("/")[0]), parseInt(GPVPGroup.split("/")[1]));
+                        const date=new Date();
+                        date.setFullYear(parseInt("20"+GPVPGroup.split("/")[2]));
+                        date.setMonth(parseInt(GPVPGroup.split("/")[0])-1);
+                        date.setDate(parseInt(GPVPGroup.split("/")[1]))
+
                         const addedMonth=parseInt(GPVPGroupDuration)
                         date.setMonth(date.getMonth()-addedMonth)
                         const year=date.getFullYear().toString().slice(2);
                         const updatedStr = (date.getMonth()==0?"12":date.getMonth())+"/"+date.getDate()+"/"+(date.getMonth()==0?(parseInt(year)-1):year)
                         GPVPGroup=updatedStr;
+                        GPVPGroup_formatted=date;
                     }
-                    workbook.sheet("Лист1").cell(`R${index+3}`).value(GPVPGroup);
+                    workbook.sheet("Лист1").cell(`R${index+3}`).value(GPVPGroup_formatted).style("numberFormat", "dd.mm.yyyy");
                     let GNVPGroup= element.GNVPGroup;
                     const GNVPGroupDuration=workbook.sheet("Лист1").cell(`S2`).value();
+                    let GNVPGroup_formatted;
                     if(GNVPGroup && GNVPGroupDuration){
-                        const date = new Date(parseInt("20"+GNVPGroup.split("/")[2]), parseInt(GNVPGroup.split("/")[0]), parseInt(GNVPGroup.split("/")[1]));
+                        const date=new Date();
+                        date.setFullYear(parseInt("20"+GNVPGroup.split("/")[2]));
+                        date.setMonth(parseInt(GNVPGroup.split("/")[0])-1);
+                        date.setDate(parseInt(GNVPGroup.split("/")[1]))
+
                         const addedMonth=parseInt(GNVPGroupDuration)
                         date.setMonth(date.getMonth()-addedMonth)
                         const year=date.getFullYear().toString().slice(2);
                         const updatedStr = (date.getMonth()==0?"12":date.getMonth())+"/"+date.getDate()+"/"+(date.getMonth()==0?(parseInt(year)-1):year)
                         GNVPGroup=updatedStr;
+                        GNVPGroup_formatted=date;
                     }
-                    workbook.sheet("Лист1").cell(`S${index+3}`).value(GNVPGroup);
+                    workbook.sheet("Лист1").cell(`S${index+3}`).value(GNVPGroup_formatted).style("numberFormat", "dd.mm.yyyy");
                     let VOZTest= element.VOZTest;
                     const VOZTestDuration=workbook.sheet("Лист1").cell(`T2`).value();
+                    let VOZTest_formatted;
                     if(VOZTest && VOZTestDuration){
-                        const date = new Date(parseInt("20"+VOZTest.split("/")[2]), parseInt(VOZTest.split("/")[0]), parseInt(VOZTest.split("/")[1]));
+                        const date=new Date();
+                        date.setFullYear(parseInt("20"+VOZTest.split("/")[2]));
+                        date.setMonth(parseInt(VOZTest.split("/")[0])-1);
+                        date.setDate(parseInt(VOZTest.split("/")[1]))
+
                         const addedMonth=parseInt(VOZTestDuration)
                         date.setMonth(date.getMonth()-addedMonth)
                         const year=date.getFullYear().toString().slice(2);
                         const updatedStr = (date.getMonth()==0?"12":date.getMonth())+"/"+date.getDate()+"/"+(date.getMonth()==0?(parseInt(year)-1):year)
                         VOZTest=updatedStr;
+                        VOZTest_formatted=date;
                     }
-                    workbook.sheet("Лист1").cell(`T${index+3}`).value(VOZTest);
+                    workbook.sheet("Лист1").cell(`T${index+3}`).value(VOZTest_formatted).style("numberFormat", "dd.mm.yyyy");
                     workbook.sheet("Лист1").cell(`U${index+3}`).value(element.VOZProfessional);
                     workbook.sheet("Лист1").cell(`V${index+3}`).value(element.burAndVSR);
                     workbook.sheet("Лист1").cell(`W${index+3}`).value(element.KSAndCMP);
@@ -530,8 +625,23 @@ class ExcelTOOL{
                     workbook.sheet("Лист1").cell(`AJ${index+3}`).value(element.medicalType);
                     workbook.sheet("Лист1").cell(`AK${index+3}`).value(element.lastInputDate);
                     workbook.sheet("Лист1").cell(`AL${index+3}`).value(element.lastInputKPP);
-                    workbook.sheet("Лист1").cell(`AM${index+3}`).value(element.passDate);
-                    workbook.sheet("Лист1").cell(`AL${index+3}`).value(element.passStatus);
+                    let passDate= element.passDate;
+                    let passDate_formatted;
+                    if(passDate){
+                        const date=new Date();
+                        date.setFullYear(parseInt("20"+passDate.split("/")[2]));
+                        date.setMonth(parseInt(passDate.split("/")[0])-1);
+                        date.setDate(parseInt(passDate.split("/")[1]))
+
+                        const addedMonth=0
+                        date.setMonth(date.getMonth()-addedMonth)
+                        const year=date.getFullYear().toString().slice(2);
+                        const updatedStr = (date.getMonth()==0?"12":date.getMonth())+"/"+date.getDate()+"/"+(date.getMonth()==0?(parseInt(year)-1):year)
+                        VOZTest=updatedStr;
+                        passDate_formatted=date;
+                    }
+                    workbook.sheet("Лист1").cell(`AM${index+3}`).value(passDate_formatted).style("numberFormat", "dd.mm.yyyy");
+                    workbook.sheet("Лист1").cell(`AN${index+3}`).value(element.passStatus);
                  })
                 
                 
@@ -539,7 +649,7 @@ class ExcelTOOL{
                 await workbook.toFileAsync(__dirname+"/../temp/"+dbName);
                 
             });    
-        //sendMail(__dirname+"/../temp/"+name,dbName);
+            await sendMail(__dirname+"/../temp/"+jurnalName,jurnalName,__dirname+"/../temp/"+dbName,dbName);
         // const workBook= xlsx.readFile(path.join(__dirname+"/../temp/"+name));
         // const mySheet = workBook.Sheets['Лист1'];
         
