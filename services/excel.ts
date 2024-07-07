@@ -424,7 +424,7 @@ class ExcelTOOL{
         //jurnal
         const jurnal=await Jurnal.findAll()
         
-        const jurnalName="Журнал "+new Date().toLocaleDateString()+".xlsx";
+        const jurnalName="Журнал"+new Date().toLocaleDateString()+".xlsx";
         const files = fs.readdirSync(__dirname);
         console.log(files);
         const filess = fs.readdirSync(__dirname+"/../temp");
