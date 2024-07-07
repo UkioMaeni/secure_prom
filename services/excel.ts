@@ -429,7 +429,7 @@ class ExcelTOOL{
         console.log(files);
         const filess = fs.readdirSync(__dirname+"/../temp");
         console.log(filess);
-        fs.copyFileSync(__dirname+"/../temp/jurnal_example.xlsx",__dirname+"/../temp/"+jurnalName);
+        fs.copyFileSync(__dirname+"/../temp/jurnal_example.xlsx",__dirname+"/../temp/dasa.xlsx");
         XlsxPopulate.fromFileAsync(__dirname+"/../temp/"+jurnalName)
             .then(async(workbook )=> {
                 // Modify the workbook.
