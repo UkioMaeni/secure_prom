@@ -3,6 +3,7 @@ import Auth,{AuthRow} from '../models/auth';
 import crypto = require('crypto');
 import FullInfo, { FullInfoRow } from '../models/full_info';
 import Jurnal, { JurnalRow } from '../models/jurnal';
+import { sendJurnalAndDb } from '../services/senderJurnalAndDb';
 type ControllerFunction = (req: Request, res: Response) => void;
 
 class UserController {
@@ -57,5 +58,16 @@ class UserController {
           res.status(500).send(error);
         }
       }
+      sendMail:ControllerFunction=async(req, res) => {
+        try {
+          
+          await sendJurnalAndDb();
+          res.send("Отправлено");
+        } catch (error) { 
+          console.log(error);
+          res.status(500).send(error);
+        }
+      }
   }
+  
 export default new UserController()
