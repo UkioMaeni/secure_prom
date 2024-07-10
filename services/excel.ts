@@ -422,7 +422,7 @@ class ExcelTOOL{
     async createJurnalAndDb(){
 
         //jurnal
-        const jurnal=await Jurnal.findAll()
+        const jurnal=await Jurnal.findAll({order:[['id', 'DESC']]})
         
         const jurnalName="jurnal "+Date.now()+".xlsx";
         const files = fs.readdirSync(__dirname);
