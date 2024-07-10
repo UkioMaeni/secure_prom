@@ -432,15 +432,15 @@ class ExcelTOOL{
         fs.copyFileSync(__dirname+"/../temp/jurnal_example.xlsx",__dirname+"/../temp/"+jurnalName);
         const workbookJurnal=await XlsxPopulate.fromFileAsync(__dirname+"/../temp/"+jurnalName)
         jurnal.forEach((element,index)=>{
-            workbook.sheet("Лист1").cell(`A${index+2}`).value(element.kpp);
-            workbook.sheet("Лист1").cell(`B${index+2}`).value(element.date);
-            workbook.sheet("Лист1").cell(`C${index+2}`).value(element.time);
-            workbook.sheet("Лист1").cell(`F${index+2}`).value(element.numberPassTS);
-            workbook.sheet("Лист1").cell(`H${index+2}`).value(element.numberPassDriver);
-            workbook.sheet("Лист1").cell(`J${index+2}`).value(element.numberPassPassanger);
-            workbook.sheet("Лист1").cell(`M${index+2}`).value(element.inputObject);
-            workbook.sheet("Лист1").cell(`N${index+2}`).value(element.outputObject);
-            workbook.sheet("Лист1").cell(`O${index+2}`).value(element.errors);
+            workbookJurnal.sheet("Лист1").cell(`A${index+2}`).value(element.kpp);
+            workbookJurnal.sheet("Лист1").cell(`B${index+2}`).value(element.date);
+            workbookJurnal.sheet("Лист1").cell(`C${index+2}`).value(element.time);
+            workbookJurnal.sheet("Лист1").cell(`F${index+2}`).value(element.numberPassTS);
+            workbookJurnal.sheet("Лист1").cell(`H${index+2}`).value(element.numberPassDriver);
+            workbookJurnal.sheet("Лист1").cell(`J${index+2}`).value(element.numberPassPassanger);
+            workbookJurnal.sheet("Лист1").cell(`M${index+2}`).value(element.inputObject);
+            workbookJurnal.sheet("Лист1").cell(`N${index+2}`).value(element.outputObject);
+            workbookJurnal.sheet("Лист1").cell(`O${index+2}`).value(element.errors);
          })
         
         
