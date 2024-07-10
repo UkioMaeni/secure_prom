@@ -430,26 +430,22 @@ class ExcelTOOL{
         const filess = fs.readdirSync(__dirname+"/../temp");
         console.log(filess);
         fs.copyFileSync(__dirname+"/../temp/jurnal_example.xlsx",__dirname+"/../temp/"+jurnalName);
-        XlsxPopulate.fromFileAsync(__dirname+"/../temp/"+jurnalName)
-            .then(async(workbook )=> {
-                // Modify the workbook.
-                jurnal.forEach((element,index)=>{
-                    workbook.sheet("Лист1").cell(`A${index+2}`).value(element.kpp);
-                    workbook.sheet("Лист1").cell(`B${index+2}`).value(element.date);
-                    workbook.sheet("Лист1").cell(`C${index+2}`).value(element.time);
-                    workbook.sheet("Лист1").cell(`F${index+2}`).value(element.numberPassTS);
-                    workbook.sheet("Лист1").cell(`H${index+2}`).value(element.numberPassDriver);
-                    workbook.sheet("Лист1").cell(`J${index+2}`).value(element.numberPassPassanger);
-                    workbook.sheet("Лист1").cell(`M${index+2}`).value(element.inputObject);
-                    workbook.sheet("Лист1").cell(`N${index+2}`).value(element.outputObject);
-                    workbook.sheet("Лист1").cell(`O${index+2}`).value(element.errors);
-                 })
-                
-                
-                // Write to file.
-                await workbook.toFileAsync(__dirname+"/../temp/"+jurnalName);
-                
-            });
+        const workbookJurnal=await XlsxPopulate.fromFileAsync(__dirname+"/../temp/"+jurnalName)
+        jurnal.forEach((element,index)=>{
+            workbook.sheet("Лист1").cell(`A${index+2}`).value(element.kpp);
+            workbook.sheet("Лист1").cell(`B${index+2}`).value(element.date);
+            workbook.sheet("Лист1").cell(`C${index+2}`).value(element.time);
+            workbook.sheet("Лист1").cell(`F${index+2}`).value(element.numberPassTS);
+            workbook.sheet("Лист1").cell(`H${index+2}`).value(element.numberPassDriver);
+            workbook.sheet("Лист1").cell(`J${index+2}`).value(element.numberPassPassanger);
+            workbook.sheet("Лист1").cell(`M${index+2}`).value(element.inputObject);
+            workbook.sheet("Лист1").cell(`N${index+2}`).value(element.outputObject);
+            workbook.sheet("Лист1").cell(`O${index+2}`).value(element.errors);
+         })
+        
+        
+        // Write to file.
+             await workbookJurnal.toFileAsync(__dirname+"/../temp/"+jurnalName);
             const db= await FullInfo.findAll();
             const dbName="Base "+Date.now()+".xlsx";
             fs.copyFileSync(__dirname+"/../temp/db_example.xlsx",__dirname+"/../temp/"+dbName);
