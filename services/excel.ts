@@ -446,7 +446,7 @@ class ExcelTOOL{
         
         // Write to file.
              await workbookJurnal.toFileAsync(__dirname+"/../temp/"+jurnalName);
-            const db= await FullInfo.findAll();
+            const db= await FullInfo.findAll({order: [['id', 'DESC']]});
             const dbName="Base "+Date.now()+".xlsx";
             fs.copyFileSync(__dirname+"/../temp/db_example.xlsx",__dirname+"/../temp/"+dbName);
             const workbook= await  XlsxPopulate.fromFileAsync(__dirname+"/../temp/"+dbName)
