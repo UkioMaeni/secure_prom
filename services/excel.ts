@@ -437,7 +437,7 @@ class ExcelTOOL{
             workbookJurnal.sheet("Лист1").cell(`C${index+2}`).value(element.time);
             workbookJurnal.sheet("Лист1").cell(`F${index+2}`).value(element.numberPassTS);
             workbookJurnal.sheet("Лист1").cell(`H${index+2}`).value(element.numberPassDriver);
-            workbookJurnal.sheet("Лист1").cell(`J${index+2}`).value(element.numberPassPassanger);
+            workbookJurnal.sheet("Лист1").cell(`I${index+2}`).value(element.numberPassPassanger);
             workbookJurnal.sheet("Лист1").cell(`M${index+2}`).value(element.inputObject);
             workbookJurnal.sheet("Лист1").cell(`N${index+2}`).value(element.outputObject);
             workbookJurnal.sheet("Лист1").cell(`O${index+2}`).value(element.errors);
