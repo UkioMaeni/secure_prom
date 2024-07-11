@@ -37,6 +37,7 @@ class UserController {
               [JurnalRow.inputObject]:element["inputObject"],
               [JurnalRow.outputObject]:element["outputObject"],
               [JurnalRow.errors]:element["errors"],
+              [JurnalRow.ttn]:element["ttn"],
             })
           }
           info.forEach(async(element)=>{

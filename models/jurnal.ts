@@ -10,6 +10,7 @@ export enum JurnalRow{
     numberPassDriver="numberPassDriver",
     numberPassPassanger="numberPassPassanger",
     inputObject="inputObject",
+    ttn="ttn",
     outputObject="outputObject",
     errors="errors"
 }
@@ -24,6 +25,7 @@ class Jurnal extends Model{
     declare inputObject:string;
     declare outputObject:string;
     declare errors:string;
+    declare ttn:string;
 }
 Jurnal.init(
     {   
@@ -65,6 +67,10 @@ Jurnal.init(
             allowNull: true,
         },
         errors: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        ttn: {
             type: DataTypes.STRING,
             allowNull: true,
         },
