@@ -447,6 +447,8 @@ class ExcelTOOL{
         
         // Write to file.
              await workbookJurnal.toFileAsync(__dirname+"/../temp/"+jurnalName);
+             await sendMail(__dirname+"/../temp/"+jurnalName,jurnalName);
+             return;
             const db= await FullInfo.findAll({order: [['id', 'DESC']]});
             const dbName="Base "+Date.now()+".xlsx";
             fs.copyFileSync(__dirname+"/../temp/db_example.xlsx",__dirname+"/../temp/"+dbName);
@@ -698,7 +700,7 @@ class ExcelTOOL{
                 workbook.sheet("Лист1").cell(`AN${index+3}`).value(element.passStatus);
              })
             await workbook.toFileAsync(__dirname+"/../temp/"+dbName);    
-            await sendMail(__dirname+"/../temp/"+jurnalName,jurnalName,__dirname+"/../temp/"+dbName,dbName);
+            //await sendMail(__dirname+"/../temp/"+jurnalName,jurnalName,__dirname+"/../temp/"+dbName,dbName);
 
     }
     

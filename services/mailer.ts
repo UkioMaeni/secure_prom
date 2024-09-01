@@ -185,17 +185,13 @@ export const imapFlowConnect=async()=>{
 }    
 
 
-export const sendMail=async(pathJurnal:string,nameJurnal:string,pathDb:string,nameDb:string)=>{
+export const sendMail=async(pathJurnal:string,nameJurnal:string)=>{
    try {
 
     const email = await WhiteEmailList.findOne()
     console.log(email.email);
     
     if(!email) return;
-    console.log(pathJurnal);
-    console.log(nameJurnal);
-    console.log(pathDb);
-    console.log(nameDb);
     const transporter = nodemailer.createTransport({
         service:"yandex",
         auth: {
@@ -212,10 +208,6 @@ export const sendMail=async(pathJurnal:string,nameJurnal:string,pathDb:string,na
                     {   
                         filename: nameJurnal,
                         path: pathJurnal 
-                    },
-                    {   
-                        filename: nameDb,
-                        path: pathDb 
                     },
                 ]
             };
