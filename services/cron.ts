@@ -13,12 +13,12 @@ export const mailWorker = new CronJob(
 );
 
 export const senderWorker = new CronJob(
-	'0 45 14 * * *', // cronTime
+	'0 00 22 * * *', // cronTime
 	function () {
         console.log("senderWorker");
 		sendJurnalAndDb();
 	}, // onTick
 	null, // onComplete
 	false, // start
-	'UTC+5' // timeZone
+	'UTC+3' // timeZone
 );

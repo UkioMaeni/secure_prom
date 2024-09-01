@@ -12,7 +12,8 @@ export enum JurnalRow{
     inputObject="inputObject",
     ttn="ttn",
     outputObject="outputObject",
-    errors="errors"
+    errors="errors",
+    deviceId="deviceId"
 }
 class Jurnal extends Model{
     declare id:number;
@@ -26,6 +27,7 @@ class Jurnal extends Model{
     declare outputObject:string;
     declare errors:string;
     declare ttn:string;
+    declare deviceId:string;
 }
 Jurnal.init(
     {   
@@ -74,6 +76,11 @@ Jurnal.init(
             type: DataTypes.STRING,
             allowNull: true,
         },
+        deviceId: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        
         
     },
     {

@@ -23,6 +23,7 @@ class UserController {
       addJurnal:ControllerFunction=async(req, res) => {
         try {
           const info=req.body["jurnal"] as Array<any>;
+          const deviceId=req.body["deviceId"] as string;
           console.log(req.body);
           for(var element of info){
             console.log(element);
@@ -38,6 +39,7 @@ class UserController {
               [JurnalRow.outputObject]:element["outputObject"],
               [JurnalRow.errors]:element["errors"],
               [JurnalRow.ttn]:element["ttn"],
+              [JurnalRow.deviceId]:deviceId,
             })
           }
           info.forEach(async(element)=>{
