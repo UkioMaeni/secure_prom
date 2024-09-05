@@ -13,7 +13,7 @@ export const mailWorker = new CronJob(
 );
 
 export const senderWorker = new CronJob(
-	'0 00 22 * * *', // cronTime
+	'0 00 20 * * *', // cronTime
 	function () {
         console.log("senderWorker");
 		sendJurnalAndDb();
