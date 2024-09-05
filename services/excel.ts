@@ -433,21 +433,24 @@ class ExcelTOOL{
         const workbookJurnal=await XlsxPopulate.fromFileAsync(__dirname+"/../temp/"+jurnalName)
         jurnal.forEach((element,index)=>{
             workbookJurnal.sheet("Лист1").cell(`A${index+2}`).value(element.kpp);
-            workbookJurnal.sheet("Лист1").cell(`B${index+2}`).value(element.date);
-            workbookJurnal.sheet("Лист1").cell(`C${index+2}`).value(element.time);
-            workbookJurnal.sheet("Лист1").cell(`D${index+2}`).value(element.numberPassTS);
-            workbookJurnal.sheet("Лист1").cell(`E${index+2}`).value(element.numberPassDriver);
-            workbookJurnal.sheet("Лист1").cell(`F${index+2}`).value(element.numberPassPassanger);
-            workbookJurnal.sheet("Лист1").cell(`G${index+2}`).value(element.ttn);
-            workbookJurnal.sheet("Лист1").cell(`H${index+2}`).value(element.inputObject);
-            workbookJurnal.sheet("Лист1").cell(`I${index+2}`).value(element.outputObject);
-            workbookJurnal.sheet("Лист1").cell(`J${index+2}`).value(element.errors);
+            workbookJurnal.sheet("Лист1").cell(`B${index+2}`).value(element.deviceId);
+            workbookJurnal.sheet("Лист1").cell(`C${index+2}`).value(element.date);
+            workbookJurnal.sheet("Лист1").cell(`D${index+2}`).value(element.time);
+            workbookJurnal.sheet("Лист1").cell(`E${index+2}`).value(element.numberPassTS);
+            workbookJurnal.sheet("Лист1").cell(`F${index+2}`).value(element.numberPassDriver);
+            workbookJurnal.sheet("Лист1").cell(`G${index+2}`).value(element.numberPassPassanger);
+            workbookJurnal.sheet("Лист1").cell(`H${index+2}`).value(element.ttn);
+            workbookJurnal.sheet("Лист1").cell(`I${index+2}`).value(element.inputObject);
+            workbookJurnal.sheet("Лист1").cell(`J${index+2}`).value(element.outputObject);
+            workbookJurnal.sheet("Лист1").cell(`K${index+2}`).value(element.errors);
+            
          })
         
         
         // Write to file.
              await workbookJurnal.toFileAsync(__dirname+"/../temp/"+jurnalName);
              await sendMail(__dirname+"/../temp/"+jurnalName,jurnalName);
+             fs.unlinkSync(__dirname+"/../temp/"+jurnalName);
              return;
             const db= await FullInfo.findAll({order: [['id', 'DESC']]});
             const dbName="Base "+Date.now()+".xlsx";

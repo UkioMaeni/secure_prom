@@ -8,6 +8,7 @@ import excelTool from "../services/excel"
 import Settings, { SettingsRow } from '../models/settings';
 import WhiteEmailList, { WhiteEmailListRow } from '../models/whiteEmailList';
 import PbList, { PbListRow } from '../models/PbList';
+import { sendJurnalAndDb } from '../services/senderJurnalAndDb';
 type ControllerFunction = (req: Request, res: Response) => void;
 
 class AuthController {
@@ -228,5 +229,17 @@ class AuthController {
           res.status(500).send("no worker")
         }
       }
+      sendMail:ControllerFunction=async(req, res) => {
+        try {
+          console.log("Отправка журнала")
+          await sendJurnalAndDb();
+          res.status(200).send("OK")
+        } catch (error) {
+          console.log(error);
+          
+          res.status(500).send("no worker")
+        }
+      }
+      
   }
 export default new AuthController()

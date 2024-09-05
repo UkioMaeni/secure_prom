@@ -16,6 +16,7 @@ adminPanelRouter.put("/admin/active_mail",adminPanelController.activeMailUpdate)
 adminPanelRouter.get("/admin/pb_list",adminPanelController.pbList);
 adminPanelRouter.delete("/admin/pb_list",adminPanelController.pbListDelete);
 adminPanelRouter.post("/admin/pb_list",adminPanelController.pbListAdd);
+adminPanelRouter.get("/admin/send_mail",adminPanelController.sendMail);
 // userRouter.get("/profile/:userId",UserController.profileUser);
 // userRouter.get("/find",UserController.find);
 // userRouter.post("/addfriends",UserController.addFriends);
