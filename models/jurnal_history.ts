@@ -11,7 +11,8 @@ export enum JurnalHistoryRow{
     numberPassPassanger="numberPassPassanger",
     inputObject="inputObject",
     outputObject="outputObject",
-    errors="errors"
+    errors="errors",
+    deviceId="deviceId"
 }
 class JurnalHistory extends Model{
     declare id:number;
@@ -24,6 +25,7 @@ class JurnalHistory extends Model{
     declare inputObject:string;
     declare outputObject:string;
     declare errors:string;
+    declare deviceId:string;
 }
 JurnalHistory.init(
     {   
@@ -65,6 +67,10 @@ JurnalHistory.init(
             allowNull: true,
         },
         errors: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        deviceId: {
             type: DataTypes.STRING,
             allowNull: true,
         },
