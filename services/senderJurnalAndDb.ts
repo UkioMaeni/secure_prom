@@ -21,6 +21,7 @@ export const sendJurnalAndDb=async()=>{
                 [JurnalHistoryRow.numberPassTS]:element.numberPassTS,
                 [JurnalHistoryRow.outputObject]:element.outputObject,
                 [JurnalHistoryRow.time]:element.time,
+                [JurnalHistoryRow.deviceId]:element.deviceId,
             },{ transaction })
         }
         await Jurnal.truncate({transaction})
