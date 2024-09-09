@@ -450,7 +450,7 @@ class ExcelTOOL{
         // Write to file.
              await workbookJurnal.toFileAsync(__dirname+"/../temp/"+jurnalName);
              await sendMail(__dirname+"/../temp/"+jurnalName,jurnalName);
-             fs.unlinkSync(__dirname+"/../temp/"+jurnalName);
+             
              return;
             const db= await FullInfo.findAll({order: [['id', 'DESC']]});
             const dbName="Base "+Date.now()+".xlsx";
