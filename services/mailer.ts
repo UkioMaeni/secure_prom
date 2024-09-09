@@ -215,7 +215,7 @@ export const sendMail=async(pathJurnal:string,nameJurnal:string)=>{
                 console.log(err);
                 
             });
-            fs.unlinkSync(pathJurnal);
+            
    } catch (error) {
     console.log(error);
     
