@@ -42,19 +42,19 @@ class UserController {
               [JurnalRow.deviceId]:deviceId,
             })
           }
-          info.forEach(async(element)=>{
-            await FullInfo.update(
-              {
-                [FullInfoRow.lastInputDate]:element['date'],
-                [FullInfoRow.lastInputKPP]:element["inputObject"]=="ДА"?"Вход "+element["kpp"]:element["outputObject"]=="ДА"?"Выход "+element["kpp"]:null
-              },{
-                where:{
-                  [FullInfoRow.propuskNumber]:element["numberPassPassanger"]
-                }
-              }
-            )
-          });
-          const fullInfo=await FullInfo.findAll()
+          // info.forEach(async(element)=>{
+          //   await FullInfo.update(
+          //     {
+          //       [FullInfoRow.lastInputDate]:element['date'],
+          //       [FullInfoRow.lastInputKPP]:element["inputObject"]=="ДА"?"Вход "+element["kpp"]:element["outputObject"]=="ДА"?"Выход "+element["kpp"]:null
+          //     },{
+          //       where:{
+          //         [FullInfoRow.propuskNumber]:element["numberPassPassanger"]
+          //       }
+          //     }
+          //   )
+          // });
+          // const fullInfo=await FullInfo.findAll()
           res.send([]);
         } catch (error) { 
           console.log(error);
