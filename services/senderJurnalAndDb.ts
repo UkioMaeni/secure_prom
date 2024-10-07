@@ -9,7 +9,7 @@ export const sendJurnalAndDb=async()=>{
     let transaction:Transaction|null;
     try {
         await excel.createJurnalAndDb();
-        const transaction = await sequelize.transaction();
+        transaction = await sequelize.transaction();
         const jurnal=await Jurnal.findAll();
         for(let element of jurnal){
             await JurnalHistory.create({
