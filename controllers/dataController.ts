@@ -56,9 +56,11 @@ class UserController {
           // });
           // const fullInfo=await FullInfo.findAll()
           res.send([]);
-          
+
         } catch (error) { 
           console.log(error);
+          console.log("error add jurnal");
+          
           res.status(500).send(error);
         }
       }
