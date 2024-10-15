@@ -56,6 +56,7 @@ class UserController {
           // });
           // const fullInfo=await FullInfo.findAll()
           res.send([]);
+          
         } catch (error) { 
           console.log(error);
           res.status(500).send(error);

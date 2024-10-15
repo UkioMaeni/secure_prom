@@ -423,7 +423,7 @@ class ExcelTOOL{
 
         //jurnal
         const jurnal=await Jurnal.findAll({order:[['id', 'DESC']]})
-        
+        console.log(jurnal);
         const jurnalName="jurnal "+Date.now()+".xlsx";
         const files = fs.readdirSync(__dirname);
         console.log(files);
