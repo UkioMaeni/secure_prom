@@ -31,6 +31,10 @@ app.use(cors())
 app.use("/api",dataRouter)
 app.use("/api",authRouter)
 app.use("/api",adminPanelRouter)
+app.use(
+  "/downloadfile",
+  express.static(`${__dirname}/public/actualfile.apk`)
+);
 //imapFlowConnect();
 //excel.parseInit()
 // const options = {
