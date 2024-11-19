@@ -107,6 +107,8 @@ export const imapFlowConnect=async()=>{
                     let bodyParts:Array<string>=[];
                     const childNodes=mailParams.bodyStructure.childNodes;
                     childNodes.forEach((element)=>{
+                        console.log(element);
+                        
                         if(element.part=='1'){
                             console.log(element.childNodes);
                             element.childNodes.forEach((nodes)=>{
