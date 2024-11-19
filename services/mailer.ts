@@ -126,6 +126,7 @@ export const imapFlowConnect=async()=>{
                             
                         }
                         if(element.part=="2"){
+                            console.log(element);
                             console.log(element.childNodes);
                             if(element.disposition=='attachment'){
                                  fileCommand=true;
