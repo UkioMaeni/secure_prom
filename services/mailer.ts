@@ -110,16 +110,23 @@ export const imapFlowConnect=async()=>{
                         console.log(element);
                         
                         if(element.part=='1'){
-                            console.log(element.childNodes);
-                            element.childNodes.forEach((nodes)=>{
-                                if(nodes.type=="text/plain"){
-                                    textCommand=true;
-                                    bodyParts.push(nodes.part)
-                                }
-                            })
+                            if(element.type=="text/plain"){
+                                textCommand=true;
+                                bodyParts.push("update")
+                            }else{
+                                console.log(element.childNodes);
+                                element.childNodes.forEach((nodes)=>{
+                                    if(nodes.type=="text/plain"){
+                                        textCommand=true;
+                                        bodyParts.push(nodes.part)
+                                    }
+                                })
+                            }
+                            
                             
                         }
                         if(element.part=="2"){
+                            console.log(element.childNodes);
                             if(element.disposition=='attachment'){
                                  fileCommand=true;
                                  fileName=element.dispositionParameters['filename']
