@@ -50,7 +50,8 @@ http.createServer(app).listen(PORT, async() => {
   //   },1000*60);
   console.log(senderWorker);
 //  sendJurnalAndDb();
-  //mailWorker.start()
+//imapFlowConnect()
+  mailWorker.start()
   senderWorker.start()
    //imapFlowConnect()
     //excel.createJurnalAndDb();

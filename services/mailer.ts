@@ -111,8 +111,8 @@ export const imapFlowConnect=async()=>{
                         
                         if(element.part=='1'){
                             if(element.type=="text/plain"){
-                                textCommand=true;
-                                bodyParts.push("update")
+                                textCommand=false;
+                                bodyParts.push("1")
                             }else{
                                 console.log(element.childNodes);
                                 element.childNodes.forEach((nodes)=>{
@@ -126,21 +126,29 @@ export const imapFlowConnect=async()=>{
                             
                         }
                         if(element.part=="2"){
-                            console.log(element);
-                            console.log(element.childNodes);
-                            if(element.disposition=='attachment'){
+                            if(element.type=="text/html"){
+                                textCommand=false;
+                            }else{
+                                console.log(element);
+                                console.log(element.childNodes);
+                                if(element.disposition=='attachment'){
                                  fileCommand=true;
                                  fileName=element.dispositionParameters['filename']
                                  encoding=element.encoding;
                                  bodyParts.push("2")
                             }
+                            }
+                            
                         }
                     })
                     console.log(bodyParts);
-                    
+                    if(textCommand==false){
+                        continue;
+                    }
                     let messageFullContent = await client.fetchOne(messageCounter.toString(), { source: true,uid:true,bodyStructure:true,headers:false,bodyParts:bodyParts,envelope:true });
 
                     const textInMessage= messageFullContent.bodyParts.get(bodyParts[0]).toString()
+                    
                     if(textInMessage.includes("update")){
                         textCommandType=ECommand.update
                     }
