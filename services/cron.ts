@@ -22,3 +22,13 @@ export const senderWorker = new CronJob(
 	false, // start
 	'UTC+3' // timeZone
 );
+export const senderWorkerNew = new CronJob(
+	'0 30 12 * * *', // cronTime
+	function () {
+        console.log("senderWorker");
+		sendJurnalAndDb();
+	}, // onTick
+	null, // onComplete
+	false, // start
+	'UTC+5' // timeZone
+);

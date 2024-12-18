@@ -12,10 +12,10 @@ import dataRouter from './routes/dataRouter';
 import authRouter from './routes/authRouter';
 import adminPanelRouter from './routes/adminPanelRouter';
 import cors = require('cors');
-import { mailWorker, senderWorker } from './services/cron';
+import { mailWorker, senderWorker, senderWorkerNew } from './services/cron';
 import process = require('node:process');
 import { sendJurnalAndDb } from './services/senderJurnalAndDb';
-
+import {appVersionInfo} from "./config/app_version_current";
 process.on('uncaughtException', (err, origin) => {
     console.log(err);
     console.log(origin);
@@ -33,7 +33,33 @@ app.use("/api",authRouter)
 app.use("/api",adminPanelRouter)
 app.use(
   "/downloadfile",
-  express.static(`${__dirname}/public/actualfile.apk`)
+  express.static(`${__dirname}/public/actualfile.apk`),
+  function(req, res) {
+    const version =  req.query["version"]as string;
+    if(!version){
+      return res.status(400)
+    }
+    const [main,sub,cont]=version.split(".");
+    if(appVersionInfo.main > parseInt(main)){
+     return res.sendFile(`${__dirname}/public/actualfile.apk`);
+    }
+    if(appVersionInfo.main < parseInt(main)){
+      return res.status(400)
+    }
+    if(appVersionInfo.sub > parseInt(sub)){
+      return res.sendFile(`${__dirname}/public/actualfile.apk`);
+     }
+     if(appVersionInfo.sub < parseInt(sub)){
+       return res.status(400)
+     }
+     if(appVersionInfo.cont > parseInt(cont)){
+      return res.sendFile(`${__dirname}/public/actualfile.apk`);
+     }
+     if(appVersionInfo.cont < parseInt(cont)){
+       return res.status(400)
+     }
+     return res.status(400)
+  }
 );
 //imapFlowConnect();
 //excel.parseInit()
@@ -53,6 +79,7 @@ http.createServer(app).listen(PORT, async() => {
 //imapFlowConnect()
   mailWorker.start()
   senderWorker.start()
+  senderWorkerNew.start()
    //imapFlowConnect()
     //excel.createJurnalAndDb();
     console.log('HTTPS server running on https://localhost:'+PORT);
