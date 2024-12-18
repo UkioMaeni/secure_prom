@@ -37,7 +37,7 @@ app.use(
   function(req, res) {
     const version =  req.query["version"]as string;
     if(!version){
-      return res.status(400)
+      return res.status(403).json({})
     }
     console.log(version);
     console.log(appVersionInfo);
