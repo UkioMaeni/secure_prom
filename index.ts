@@ -31,9 +31,9 @@ app.use(cors())
 app.use("/api",dataRouter)
 app.use("/api",authRouter)
 app.use("/api",adminPanelRouter)
+//express.static(`${__dirname}/public/actualfile.apk`),
 app.use(
   "/downloadfile",
-  express.static(`${__dirname}/public/actualfile.apk`),
   function(req, res) {
     const version =  req.query["version"]as string;
     if(!version){
