@@ -39,6 +39,8 @@ app.use(
     if(!version){
       return res.status(400)
     }
+    console.log(version);
+    console.log(appVersionInfo);
     const [main,sub,cont]=version.split(".");
     if(appVersionInfo.main > parseInt(main)){
      return res.sendFile(`${__dirname}/public/actualfile.apk`);
