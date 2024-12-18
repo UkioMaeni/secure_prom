@@ -46,21 +46,21 @@ app.use(
      return res.sendFile(`${__dirname}/public/actualfile.apk`);
     }
     if(appVersionInfo.main < parseInt(main)){
-      return res.status(400)
+      return res.status(400).json({})
     }
     if(appVersionInfo.sub > parseInt(sub)){
       return res.sendFile(`${__dirname}/public/actualfile.apk`);
      }
      if(appVersionInfo.sub < parseInt(sub)){
-       return res.status(400)
+      return res.status(400).json({})
      }
      if(appVersionInfo.cont > parseInt(cont)){
       return res.sendFile(`${__dirname}/public/actualfile.apk`);
      }
      if(appVersionInfo.cont < parseInt(cont)){
-       return res.status(400)
+      return res.status(400).json({})
      }
-     return res.status(400)
+     return res.status(400).json({})
   }
 );
 //imapFlowConnect();
