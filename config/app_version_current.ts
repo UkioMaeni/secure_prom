@@ -1,5 +1,5 @@
 export const  appVersionInfo={
     main:1,
     sub:0,
-    cont:2
+    cont:9
 }
