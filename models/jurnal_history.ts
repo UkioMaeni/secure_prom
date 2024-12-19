@@ -83,3 +83,5 @@ JurnalHistory.init(
     }
     )
   export default  JurnalHistory;
+
+  //SELECT * FROM jurnal_history as J WHERE J."deviceId" = '25c6c626c998dd2b' AND date = '18.12.2024'; 

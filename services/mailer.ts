@@ -59,9 +59,11 @@ export const imapFlowConnect=async()=>{
            
          lock = await client.getMailboxLock('INBOX',);
         
-        console.log(client.mailbox );
+        //console.log(client.mailbox );
         const obj:MailboxObject=client.mailbox as MailboxObject;
-        console.log(obj.exists);
+        //console.log(obj.exists);
+        console.log(new Date().toDateString());
+        
         const lastMessage= await Settings.findOne({
                 where:{
                     [SettingsRow.name]:'lastMail'
