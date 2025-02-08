@@ -16,6 +16,7 @@ import { mailWorker, senderWorker, senderWorkerNew } from './services/cron';
 import process = require('node:process');
 import { sendJurnalAndDb } from './services/senderJurnalAndDb';
 import {appVersionInfo} from "./config/app_version_current";
+import { startBotProcess } from './services/tg_bot';
 process.on('uncaughtException', (err, origin) => {
     console.log(err);
     console.log(origin);
@@ -82,6 +83,7 @@ http.createServer(app).listen(PORT, async() => {
   mailWorker.start()
   senderWorker.start()
   senderWorkerNew.start()
+  startBotProcess();
    //imapFlowConnect()
     //excel.createJurnalAndDb();
     console.log('HTTPS server running on https://localhost:'+PORT);
