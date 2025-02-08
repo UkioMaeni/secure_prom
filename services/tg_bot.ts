@@ -9,11 +9,11 @@ export const startBotProcess=()=>{
         const chatId = msg.chat.id;
         const messageText = msg.text;
         if (messageText === '020202'){
-            accessCodes.set(chatId,"");
+            accessCodes.set(chatId,"user");
             bot.sendMessage(chatId, "Вы авторизованы");
             return;
         }
-        if(accessCodes[chatId]==null){
+        if(!accessCodes.get(chatId)){
             bot.sendMessage(chatId, 'Для доступа введите пароль');
             return;
         }
