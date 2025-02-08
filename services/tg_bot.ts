@@ -8,14 +8,15 @@ export const startBotProcess=()=>{
     bot.on('message', (msg) => {
         const chatId = msg.chat.id;
         const messageText = msg.text;
-        if(accessCodes[chatId]==null){
-            bot.sendMessage(chatId, 'Для доступа введите пароль');
-            return;
-        }
         if (messageText === '020202'){
             accessCodes.set(chatId,"");
             bot.sendMessage(chatId, "Вы авторизованы");
         }
+        if(accessCodes[chatId]==null){
+            bot.sendMessage(chatId, 'Для доступа введите пароль');
+            return;
+        }
+        
         if (messageText === '/check') {
            return checkAccessCount();
         } else if (messageText === '/help') {
