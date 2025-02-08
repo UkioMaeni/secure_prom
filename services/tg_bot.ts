@@ -11,6 +11,7 @@ export const startBotProcess=()=>{
         if (messageText === '020202'){
             accessCodes.set(chatId,"");
             bot.sendMessage(chatId, "Вы авторизованы");
+            return;
         }
         if(accessCodes[chatId]==null){
             bot.sendMessage(chatId, 'Для доступа введите пароль');
