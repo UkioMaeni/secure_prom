@@ -110,12 +110,16 @@ export const imapFlowConnect=async()=>{
                     const childNodes=mailParams.bodyStructure.childNodes;
                     childNodes.forEach((element)=>{
                         console.log(element);
+                        console.log("ПРОВЕРКА НА ЧАСТИ ПОЧТЫ");
                         
-                        if(element.part=='1'){
+                        if(element.part=='1'||element.part=='1.1'){
+                            console.log("НАЙДЕНА ЧАСТЬ 1 ИМЛИ 1,1");
                             if(element.type=="text/plain"){
+                                console.log("НАЙДЕНА НОДА");
                                 textCommand=false;
                                 bodyParts.push("1")
                             }else{
+                                console.log("НЕ НАЙДЕНА НОДА");
                                 console.log(element.childNodes);
                                 element.childNodes.forEach((nodes)=>{
                                     if(nodes.type=="text/plain"){
