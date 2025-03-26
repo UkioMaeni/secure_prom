@@ -359,9 +359,7 @@ class ExcelTOOL{
                 lastInputDate=value[0].lastInputDate
                 lastInputKPP=value[0].lastInputKPP
             }
-            if(propuskNumber)
-            sendBotProcess("База обновлена успешно");
-            
+            //ds
             await FullInfo.create({
                 [FullInfoRow.fullName]:fullName,
                 [FullInfoRow.propuskNumber]:propuskNumber,
