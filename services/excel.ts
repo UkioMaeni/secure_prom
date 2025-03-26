@@ -8,6 +8,7 @@ import Jurnal from '../models/jurnal';
 import { sendMail } from './mailer';
 import XlsxPopulate = require('xlsx-populate');
 import sequelize from '../db/postgres/postgresDb';
+import { sendBotProcess } from './tg_bot';
 class ExcelTOOL{
     private requiredDocData(xlsx:xlsx.WorkSheet):boolean{
         console.log(xlsx["A1"]["w"]);
@@ -73,8 +74,8 @@ class ExcelTOOL{
         //req
     }
     syncToDB=async(pathToFile:string):Promise<void>=>{
-        const transaction = await sequelize.transaction()
        try {
+        sendBotProcess("Начался парсинг с excel файла");
         const setting=  await Settings.findOne({
             where:{
                 [SettingsRow.name]:"update"
@@ -116,7 +117,8 @@ class ExcelTOOL{
         fullInfoList=await FullInfo.findAll()
         console.log(fullInfoList.length);
         
-        await FullInfo.truncate({transaction});
+        await FullInfo.truncate();
+        sendBotProcess("Старая база очищена");
         for(let j=3;j<=endRow;j++){
         
             const fullName=sheet["A"+j]?.["w"]??null;
@@ -396,16 +398,16 @@ class ExcelTOOL{
                 [FullInfoRow.lastInputKPP]:lastInputKPP,
                 [FullInfoRow.passStatus]:passStatus,
                 [FullInfoRow.passDate]:passDate,
-            },{transaction})
+            })
             console.log("Запись создана");
             if(value.length>0){
                 console.log("Запись обновлена");
             }
         }
-        await transaction.commit()
+        sendBotProcess("База обновлена успешно");
        } catch (error) {
-        transaction.rollback()
         console.log(error);
+        sendBotProcess("Ошибка в парсинге базы:\nОшибка: "+error.toString());
         
        } finally{
             await Settings.update({

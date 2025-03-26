@@ -92,7 +92,7 @@ FullInfo.init(
             type: DataTypes.STRING,
             allowNull: true,
         },
-        propuskNumber: {
+        propuskNumbed: {
             type: DataTypes.STRING,
             allowNull: true,
         },
