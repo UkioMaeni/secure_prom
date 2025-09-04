@@ -232,7 +232,7 @@ class AuthController {
       sendMail:ControllerFunction=async(req, res) => {
         try {
           console.log("Отправка журнала")
-          await sendJurnalAndDb();
+          await sendJurnalAndDb(false);
           res.status(200).send("OK")
         } catch (error) {
           console.log(error);
