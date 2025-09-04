@@ -165,7 +165,7 @@ export const imapFlowConnect=async()=>{
                         
                         const buffer = Buffer.from(messageFullContent.bodyParts.get(bodyParts[1]).toString('utf8'), 'base64');
                         console.log(__dirname);
-                      
+                        
                          fs.writeFileSync(__dirname+"/../temp/"+"base.xlsx",buffer)
                          
                          await excel.syncToDB("base.xlsx");

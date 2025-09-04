@@ -67,7 +67,7 @@ class UserController {
       sendMail:ControllerFunction=async(req, res) => {
         try {
           
-          await sendJurnalAndDb();
+          await sendJurnalAndDb(false);
           res.send("Отправлено");
         } catch (error) { 
           console.log(error);
