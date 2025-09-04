@@ -5,7 +5,7 @@ import excel from "./excel";
 import sequelize from "../db/postgres/postgresDb";
 import { sendBotProcess } from "./tg_bot";
 
-export const sendJurnalAndDb=async()=>{
+export const sendJurnalAndDb=async(sendToHistory:boolean)=>{
         
     
     try {
@@ -15,21 +15,23 @@ export const sendJurnalAndDb=async()=>{
         await excel.createJurnalAndDb();
         sendBotProcess("Журнал сформирован и отправлен на почту");
         const jurnal=await Jurnal.findAll();
-        for(let element of jurnal){
-            await JurnalHistory.create({
-                [JurnalHistoryRow.date]:element.date,
-                [JurnalHistoryRow.kpp]:element.kpp,
-                [JurnalHistoryRow.inputObject]:element.inputObject,
-                [JurnalHistoryRow.numberPassDriver]:element.numberPassDriver,
-                [JurnalHistoryRow.numberPassPassanger]:element.numberPassPassanger,
-                [JurnalHistoryRow.numberPassTS]:element.numberPassTS,
-                [JurnalHistoryRow.outputObject]:element.outputObject,
-                [JurnalHistoryRow.time]:element.time,
-                [JurnalHistoryRow.deviceId]:element.deviceId,
-            },)
+        if(sendToHistory){
+            for(let element of jurnal){
+                await JurnalHistory.create({
+                    [JurnalHistoryRow.date]:element.date,
+                    [JurnalHistoryRow.kpp]:element.kpp,
+                    [JurnalHistoryRow.inputObject]:element.inputObject,
+                    [JurnalHistoryRow.numberPassDriver]:element.numberPassDriver,
+                    [JurnalHistoryRow.numberPassPassanger]:element.numberPassPassanger,
+                    [JurnalHistoryRow.numberPassTS]:element.numberPassTS,
+                    [JurnalHistoryRow.outputObject]:element.outputObject,
+                    [JurnalHistoryRow.time]:element.time,
+                    [JurnalHistoryRow.deviceId]:element.deviceId,
+                },)
+            }
+            sendBotProcess("История журнала добавлена в таблицу идет очистка основного журнала");
+            await Jurnal.truncate()
         }
-        sendBotProcess("История журнала добавлена в таблицу идет очистка основного журнала");
-        await Jurnal.truncate()
         const countPast=await Jurnal.count()
         sendBotProcess("Журнал очищен.теперь в нем записей - "+countPast);
     } catch (error) {

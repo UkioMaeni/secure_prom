@@ -16,7 +16,7 @@ export const senderWorker = new CronJob(
 	'0 00 20 * * *', // cronTime
 	function () {
         console.log("senderWorker");
-		sendJurnalAndDb();
+		sendJurnalAndDb(true);
 	}, // onTick
 	null, // onComplete
 	false, // start
@@ -26,7 +26,7 @@ export const senderWorkerNew = new CronJob(
 	'0 30 12 * * *', // cronTime
 	function () {
         console.log("senderWorker");
-		sendJurnalAndDb();
+		sendJurnalAndDb(false);
 	}, // onTick
 	null, // onComplete
 	false, // start
